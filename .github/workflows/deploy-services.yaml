@@ -1,0 +1,52 @@
+name: Deploying Services
+on: [ never ]
+
+env:
+  CONTAINER_REPO: aaitho/services
+  SRC: ./src
+
+jobs:
+  push-image:
+    name: Build docker image and push to repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Build image
+        working-directory: ${{ env.SRC }}
+        env:
+          DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:${{ github.head_ref || github.ref_name }}-${{ github.event.pull_request.head.sha }}
+        run: |
+          docker build -t $DOCKER_IMAGE .
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push $DOCKER_IMAGE
+
+  k3s-deploy:
+    name: Deploy service to K3S
+    needs: push-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: azure/setup-kubectl@v3
+        id: install
+
+      - name: Configure kubectl
+        run: |
+          mkdir $HOME/.kube/
+          echo "${{ secrets.KUBE_CONFIG }}" >> $HOME/.kube/config
+      
+      - name: Deploy kubernetes definitions
+        working-directory: ${{ env.SRC }}
+        env:
+          BRANCH: ${{ github.head_ref || github.ref_name }}
+          CONTAINER_REPO: ${{ env.CONTAINER_REPO }}
+        run: |
+          export GITHUB_SHA=${{ github.event.pull_request.head.sha }}
+          envsubst < definition.yaml > def.yaml
+          kubectl apply -f def.yaml
+          
+      
+      
