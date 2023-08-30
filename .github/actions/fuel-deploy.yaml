@@ -1,0 +1,30 @@
+name: GitHub Actions Demo
+on: [ pull_request ]
+
+env:
+  CONTAINER_REPO: aaitho/services
+
+jobs:
+  push-image:
+    name: Build docker image and push to repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build image
+        run: |
+          docker build -t ${{ env.CONTAINER_REPO }}:${{ github.head_ref || github.ref_name }}
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push ${{ env.CONTAINER_REPO }}:${{ github.head_ref || github.ref_name }}
+  k3s-deploy:
+    name: Deploy service to K3S
+    runs-on: ubuntu-latest
+    steps:
+      - uses: azure/setup-kubectl@v3
+        id: install
+      - name: Configure kubectl
+        run: |
+          echo ${{ secrets.KUBE_CONFIG }} >> $HOME/.kube/config
+      - name: Deploy kubernetes definitions
+        run: k get pods
+          
+      
+      

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fuel
+spec:
+  selector:
+    matchLabels:
+      app: fuel
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: fuel
+    spec:
+      containers:
+        - name: fuel
+          image: traefik/whoami:v1.9.0
+          ports:
+            - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: fuel
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: asd
+
+---
+
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: fuel
+
+spec:
+  rules:
+    - host: fuel.api.viggo.work
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fuel
+                port:
+                  number: 80
