@@ -1,20 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fuel
+  name: $BRANCH
+  labels:
+    hash: $GITHUB_SHA
 spec:
   selector:
     matchLabels:
-      app: fuel
+      app: $BRANCH
   replicas: 1
   template:
     metadata:
       labels:
-        app: fuel
+        app: $BRANCH
     spec:
       containers:
-        - name: fuel
-          image: traefik/whoami:v1.9.0
+        - name: $BRANCH
+          image: $CONTAINER_REPO:$BRANCH-$GITHUB_SHA
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
 
@@ -23,31 +26,33 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fuel
+  name: $BRANCH
 spec:
   type: ClusterIP
   ports:
     - port: 80
       targetPort: 80
   selector:
-    app: asd
+    app: $BRANCH
 
 ---
 
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: fuel
-
+  name: $BRANCH
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
+  ingressClassName: nginx
   rules:
-    - host: fuel.api.viggo.work
+    - host: $BRANCH.api.viggo.work
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: fuel
+                name: $BRANCH
                 port:
                   number: 80
