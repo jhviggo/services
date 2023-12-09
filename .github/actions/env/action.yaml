@@ -1,0 +1,10 @@
+name: environment
+author: Viggo Petersen
+description: Sets a few ENV variables for the deployment, including [branch name, sha]
+inputs:
+  branch:
+    description: The branch name
+    required: true
+runs:
+  using: node16
+  main: index.js
