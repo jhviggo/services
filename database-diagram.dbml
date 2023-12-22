@@ -1,0 +1,30 @@
+Table vehicles {
+  id integer [primary key]
+  userId integer [ref: > users.id]
+  model varchar
+  createdAt timestamp 
+}
+
+Table users {
+  id integer [primary key]
+  displayName varchar
+  username varchar
+  passwd varchar
+  salt varchar
+  createdAt timestamp
+}
+
+Table refuels {
+  id integer [primary key]
+  userId integer [ref: > users.id]
+  vehicleId integer [ref: > vehicles.id]
+  createdAt timestamp
+}
+
+Table logs {
+  id interger [primary key]
+  serviceName varchar
+  functionName varchar
+  logMessage text
+  createdAt timestamp
+}

@@ -4,6 +4,7 @@ on: [ never ]
 env:
   CONTAINER_REPO: aaitho/services
   SRC: ./src
+  INFRA: ./infrastructure
 
 jobs:
   push-image:
@@ -12,12 +13,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: Build image
-        working-directory: ${{ env.SRC }}
-        env:
-          DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:${{ github.head_ref || github.ref_name }}-${{ github.event.pull_request.head.sha }}
+
+      - name: Lowercase branch name
+        uses: ./.github/actions/env/
+        with:
+          branch: ${{ github.head_ref || github.ref_name }}
+
+      - name: Build code
         run: |
+          npm install
+          npm run build
+      
+      - name: Build Docker image
+        env:
+          DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:${{ env.BRANCH }}-${{ env.GITHUB_SHA_HASH  }}
+        run: |
+          cp infrastructure/Dockerfile ./Dockerfile
+          echo "PORT=80" >> .env
+          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
           docker build -t $DOCKER_IMAGE .
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push $DOCKER_IMAGE
@@ -30,6 +43,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Lowercase branch name
+        uses: ./.github/actions/env/
+        with:
+          branch: ${{ github.head_ref || github.ref_name }}
+
       - uses: azure/setup-kubectl@v3
         id: install
 
@@ -39,13 +57,13 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" >> $HOME/.kube/config
       
       - name: Deploy kubernetes definitions
-        working-directory: ${{ env.SRC }}
+        working-directory: ${{ env.INFRA }}
         env:
-          BRANCH: ${{ github.head_ref || github.ref_name }}
+          BRANCH: ${{ env.BRANCH }}
           CONTAINER_REPO: ${{ env.CONTAINER_REPO }}
+          GITHUB_SHA: ${{ env.GITHUB_SHA_HASH }}
         run: |
-          export GITHUB_SHA=${{ github.event.pull_request.head.sha }}
-          envsubst < definition.yaml > def.yaml
+          envsubst < ci.yaml > def.yaml
           kubectl apply -f def.yaml
           
       
