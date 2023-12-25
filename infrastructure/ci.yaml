@@ -15,6 +15,28 @@ spec:
       containers:
         - name: ${BRANCH}-service
           image: ${CONTAINER_REPO}:${BRANCH}-${GITHUB_SHA}
+          #readinessProbe:
+          #  httpGet:
+          #    path: /health
+          #    port: 80
+          #  failureThreshold: 3
+          #  periodSeconds: 10
+          env:
+            - name: DATABASE_SOURCE
+              value: mysql
+            - name: DATABASE_NAME
+              value: main
+            - name: DATABASE_USERNAME
+              value: root
+            - name: PORT
+              value: "80"
+            - name: GIN_MODE
+              value: release
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
           ports:
             - containerPort: 80
 

@@ -4,8 +4,8 @@ WORKDIR /app
 COPY . .
 
 RUN go mod download
-RUN go build -o /godocker
+RUN go build -o ./godocker
  
-EXPOSE 8080
+EXPOSE 80
  
-CMD [ “/godocker” ]
+CMD [ "./godocker" ]
