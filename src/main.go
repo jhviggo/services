@@ -11,14 +11,14 @@ import (
 )
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "1337"
-	}
-
 	envErr := godotenv.Load(".env")
 	if envErr != nil {
 		fmt.Println("[warning] Could not find .env file, using raw env variables.")
+	}
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "1337"
 	}
 
 	repository.DatabaseConnect()
@@ -28,8 +28,8 @@ func main() {
 	router.GET("/v1/users", users.GetUsers)
 	router.GET("/health", healthCheck)
 
-	fmt.Println("[Server] ⚡ running on localhost:" + port)
-	router.Run("localhost:" + port)
+	fmt.Println("[Server] ⚡ running on 127.0.0.1:" + port)
+	router.Run(":" + port)
 }
 
 func healthCheck(c *gin.Context) {
