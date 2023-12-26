@@ -18,7 +18,7 @@ jobs:
         uses: ./.github/actions/env/
         with:
           branch: ${{ github.head_ref || github.ref_name }}
-      
+
       - name: Build Docker image
         env:
           DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:${{ env.BRANCH }}-${{ env.GITHUB_SHA_HASH  }}
@@ -61,7 +61,7 @@ jobs:
       
       - name: Wait for service to be ready
         run: |
-          kubectl rollout status deployment/${{ env.BRANCH }}-service --timeout=60s
+          kubectl rollout status deployment/${{ env.BRANCH }}-service --timeout=30s
           
       
       
