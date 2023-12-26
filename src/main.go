@@ -26,6 +26,7 @@ func main() {
 
 	router := gin.Default()
 	router.GET("/v1/users", users.GetUsers)
+	router.POST("/v1/users", users.PostUser)
 	router.GET("/health", healthCheck)
 
 	fmt.Println("[Server] ⚡ running on 127.0.0.1:" + port)
