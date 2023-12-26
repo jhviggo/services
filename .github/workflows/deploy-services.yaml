@@ -1,5 +1,5 @@
 name: Deploying Services
-on: [ never ]
+on: [ push ]
 
 env:
   CONTAINER_REPO: aaitho/services
@@ -18,20 +18,13 @@ jobs:
         uses: ./.github/actions/env/
         with:
           branch: ${{ github.head_ref || github.ref_name }}
-
-      - name: Build code
-        run: |
-          npm install
-          npm run build
       
       - name: Build Docker image
         env:
           DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:${{ env.BRANCH }}-${{ env.GITHUB_SHA_HASH  }}
         run: |
-          cp infrastructure/Dockerfile ./Dockerfile
-          echo "PORT=80" >> .env
-          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
-          docker build -t $DOCKER_IMAGE .
+          cp ${{ env.INFRA }}/Dockerfile ${{ env.SRC }}/Dockerfile
+          docker build -t $DOCKER_IMAGE ${{ env.SRC }}
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push $DOCKER_IMAGE
 
@@ -65,6 +58,10 @@ jobs:
         run: |
           envsubst < ci.yaml > def.yaml
           kubectl apply -f def.yaml
+      
+      - name: Wait for service to be ready
+        run: |
+          kubectl rollout status deployment/${{ env.BRANCH }}-service --timeout=60s
           
       
       

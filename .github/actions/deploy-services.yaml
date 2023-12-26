@@ -1,5 +1,5 @@
 name: Deploying Services
-on: [ pull_request ]
+on: [ push ]
 
 env:
   CONTAINER_REPO: aaitho/services
@@ -13,12 +13,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Lowercase branch name
+        uses: ./.github/actions/environment/
+        with:
+          branch: ${{ github.head_ref || github.ref_name }}
+
       - name: Build image
         working-directory: ${{ env.SRC }}
         env:
-          DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:${{ github.head_ref || github.ref_name }}-${{ github.event.pull_request.head.sha }}
+          DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:${{ env.BRANCH }}-${{ github.event.pull_request.head.sha }}
         run: |
-          echo "${{ github.event.pull_request.head.sha }}"
+          cp ../infrastructure/Dockerfile .
           docker build -t $DOCKER_IMAGE .
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push $DOCKER_IMAGE
@@ -30,6 +35,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Lowercase branch name
+        uses: ./.github/actions/environment/
+        with:
+          branch: ${{ github.head_ref || github.ref_name }}
       
       - uses: azure/setup-kubectl@v3
         id: install
@@ -42,7 +52,7 @@ jobs:
       - name: Deploy kubernetes definitions
         working-directory: ${{ env.SRC }}
         env:
-          BRANCH: ${{ github.head_ref || github.ref_name }}
+          BRANCH: ${{ env.BRANCH }}
           CONTAINER_REPO: ${{ env.CONTAINER_REPO }}
         run: |
           export GITHUB_SHA=${{ github.event.pull_request.head.sha }}
