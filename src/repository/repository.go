@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -57,4 +58,40 @@ func TestConnection() {
 		panic("\nReturned value from database was wrong!")
 	}
 	fmt.Println("OK!")
+}
+
+func AddUser(user User) (User, error) {
+	var addedUser User
+
+	_, insertErr := db.Exec("INSERT INTO users (displayName, username, passwd, createdAt) VALUES (?,?,?,NOW());",
+		user.Name, user.Username, user.Password)
+
+	if insertErr != nil {
+		log.Println("unable to insert user into database")
+		return addedUser, insertErr
+	}
+	selectErr := db.QueryRow("SELECT id, displayName, username FROM users WHERE username = ?;", user.Username).Scan(&addedUser.ID, &addedUser.Name, &addedUser.Username)
+
+	if selectErr != nil {
+		log.Println("unable to get user from database")
+		return addedUser, selectErr
+	}
+	return addedUser, nil
+}
+
+func GetUsers() ([]User, error) {
+	var users []User
+
+	rows, err := db.Query("SELECT id, displayName, username FROM users;")
+	if err != nil {
+		return make([]User, 0), err
+	}
+
+	for rows.Next() {
+		var myUser User
+		rows.Scan(&myUser.ID, &myUser.Name, &myUser.Username)
+		users = append(users, myUser)
+	}
+
+	return users, nil
 }

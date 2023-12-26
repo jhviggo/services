@@ -1,13 +1,13 @@
-USE MAIN;
+USE main;
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   displayName NVARCHAR(50) NOT NULL,
   username NVARCHAR(100) NOT NULL,
   passwd NVARCHAR(255) NOT NULL,
-  salt NVARCHAR(50) NOT NULL,
   createdAt DATETIME NOT NULL,
   INDEX (id)
+  UNIQUE (username)
 );
 
 CREATE TABLE vehicles (
