@@ -22,7 +22,7 @@ type User struct {
 func GetHandler(c *gin.Context) {
 	users, err := fetchUsers()
 	if err != nil {
-		log.Println("unable to get users", err)
+		log.Println("[warning] unable to get users", err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": "unable to get users"})
 		return
 	}
@@ -33,7 +33,7 @@ func PostHandler(c *gin.Context) {
 	var newUser User
 
 	if err := c.BindJSON(&newUser); err != nil {
-		log.Printf("unable to create user. %s\n", err.Error())
+		log.Printf("[warning] unable to create user. %s\n", err.Error())
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Unable to unmarshal JSON"})
 		return
 	}
@@ -59,7 +59,7 @@ func PostHandler(c *gin.Context) {
 
 	user, err := insertUser(newUser)
 	if err != nil {
-		log.Println("failed to add user to database", err)
+		log.Println("[warning] failed to add user to database", err)
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": "Unable to add user to database"})
 		return
 	}
@@ -72,7 +72,7 @@ func HashPasswordWithSalt(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 
 	if err != nil {
-		log.Println("unable to generate hash of password with length", len(password))
+		log.Println("[warning] unable to generate hash of password with length", len(password))
 		return "", err
 	}
 	return string(bytes), nil
@@ -89,7 +89,7 @@ func insertUser(user User) (User, error) {
 	fmt.Println("password:", hashedPassword)
 
 	if hashErr != nil {
-		log.Println("failed to hash user's password")
+		log.Println("[warning] failed to hash user's password")
 		return addedUser, hashErr
 	}
 
@@ -97,13 +97,13 @@ func insertUser(user User) (User, error) {
 		user.Name, user.Username, hashedPassword)
 
 	if insertErr != nil {
-		log.Println("unable to insert user into database")
+		log.Println("[warning] unable to insert user into database")
 		return addedUser, insertErr
 	}
 	selectErr := repository.DB.QueryRow("SELECT id, displayName, username FROM users WHERE username = ?;", user.Username).Scan(&addedUser.ID, &addedUser.Name, &addedUser.Username)
 
 	if selectErr != nil {
-		log.Println("unable to get user from database")
+		log.Println("[warning] unable to get user from database")
 		return addedUser, selectErr
 	}
 	return addedUser, nil

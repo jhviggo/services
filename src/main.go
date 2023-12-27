@@ -21,6 +21,10 @@ func main() {
 		port = "1337"
 	}
 
+	if os.Getenv("GIN_MODE") != "release" {
+		os.Setenv("RUN_ADDRESS", "localhost")
+	}
+
 	repository.DatabaseConnect()
 	repository.TestConnection()
 
