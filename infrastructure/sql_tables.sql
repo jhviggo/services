@@ -16,7 +16,7 @@ CREATE TABLE vehicles (
   model VARCHAR(50) NOT NULL,
   createdAt DATETIME NOT NULL,
   FOREIGN KEY (userId) REFERENCES users(id),
-  INDEX (id)
+  INDEX (userId)
 );
 
 CREATE TABLE refuels (
@@ -26,7 +26,7 @@ CREATE TABLE refuels (
   createdAt DATETIME NOT NULL,
   FOREIGN KEY (userId) REFERENCES users(id),
   FOREIGN KEY (vehicleId) REFERENCES vehicles(id),
-  INDEX (id)
+  INDEX (userId)
 );
 
 CREATE TABLE logs (
@@ -35,7 +35,6 @@ CREATE TABLE logs (
   functionName VARCHAR(100),
   logMessage TEXT,
   createdAt DATETIME NOT NULL,
-  INDEX (id)
 );
 
 

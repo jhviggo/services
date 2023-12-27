@@ -25,12 +25,12 @@ func main() {
 	repository.TestConnection()
 
 	router := gin.Default()
-	router.GET("/v1/users", users.GetUsers)
-	router.POST("/v1/users", users.PostUser)
+	router.GET("/v1/users", users.GetHandler)
+	router.POST("/v1/users", users.PostHandler)
 	router.GET("/health", healthCheck)
 
 	fmt.Println("[Server] ⚡ running on 127.0.0.1:" + port)
-	router.Run(":" + port)
+	router.Run(os.Getenv("RUN_ADDRESS") + ":" + port)
 }
 
 func healthCheck(c *gin.Context) {
