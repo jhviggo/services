@@ -45,7 +45,7 @@ func fetchVehicles(userId string) ([]Vehicle, error) {
 	vehicles := make([]Vehicle, 0)
 
 	rows, err := repository.DB.Query(
-		"SELECT userId, model, estimatedKML FROM vehicles WHERE userId = ?",
+		"SELECT id, userId, model, estimatedKML FROM vehicles WHERE userId = ?",
 		userId,
 	)
 
@@ -55,7 +55,7 @@ func fetchVehicles(userId string) ([]Vehicle, error) {
 
 	for rows.Next() {
 		var vehicle Vehicle
-		rows.Scan(&vehicle.UserId, &vehicle.Model, &vehicle.EstimatedKML)
+		rows.Scan(&vehicle.ID, &vehicle.UserId, &vehicle.Model, &vehicle.EstimatedKML)
 		vehicles = append(vehicles, vehicle)
 	}
 
