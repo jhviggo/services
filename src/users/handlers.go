@@ -24,7 +24,7 @@ func PostHandler(c *gin.Context) {
 
 	if err := c.BindJSON(&newUser); err != nil {
 		log.Printf("[warning] unable to create user. %s\n", err.Error())
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Unable to unmarshal JSON"})
+		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid request body"})
 		return
 	}
 
