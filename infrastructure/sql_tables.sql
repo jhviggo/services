@@ -6,7 +6,7 @@ CREATE TABLE users (
   username NVARCHAR(100) NOT NULL,
   passwd NVARCHAR(255) NOT NULL,
   createdAt DATETIME NOT NULL,
-  INDEX (id)
+  INDEX (id),
   UNIQUE (username)
 );
 
@@ -14,6 +14,7 @@ CREATE TABLE vehicles (
   id INT AUTO_INCREMENT PRIMARY KEY,
   userId INT NOT NULL,
   model VARCHAR(50) NOT NULL,
+  estimatedKML INT,
   createdAt DATETIME NOT NULL,
   FOREIGN KEY (userId) REFERENCES users(id),
   INDEX (userId)
@@ -23,18 +24,13 @@ CREATE TABLE refuels (
   id INT AUTO_INCREMENT PRIMARY KEY,
   userId INT NOT NULL,
   vehicleId INT NOT NULL,
+  totalKM FLOAT NOT NULL,
+  tripKM FLOAT NOT NULL,
+  liters FLOAT NOT NULL,
+  cost FLOAT NOT NULL,
+  currency VARCHAR(10) NOT NULL,
   createdAt DATETIME NOT NULL,
   FOREIGN KEY (userId) REFERENCES users(id),
   FOREIGN KEY (vehicleId) REFERENCES vehicles(id),
   INDEX (userId)
 );
-
-CREATE TABLE logs (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  serviceName VARCHAR(100),
-  functionName VARCHAR(100),
-  logMessage TEXT,
-  createdAt DATETIME NOT NULL,
-);
-
-

@@ -15,25 +15,30 @@ type User struct {
 
 func insertUser(user User) (User, error) {
 	var addedUser User
-	hashedPassword, hashErr := HashPasswordWithSalt(user.Password)
+	hashedPassword, err := HashPasswordWithSalt(user.Password)
 
-	if hashErr != nil {
+	if err != nil {
 		log.Println("[warning] failed to hash user's password")
-		return addedUser, hashErr
+		return addedUser, err
 	}
 
-	_, insertErr := repository.DB.Exec("INSERT INTO users (displayName, username, passwd, createdAt) VALUES (?,?,?,NOW());",
-		user.Name, user.Username, hashedPassword)
+	_, err = repository.DB.Exec(
+		"INSERT INTO users (displayName, username, passwd, createdAt) VALUES (?,?,?,NOW());",
+		user.Name,
+		user.Username,
+		hashedPassword)
 
-	if insertErr != nil {
+	if err != nil {
 		log.Println("[warning] unable to insert user into database")
-		return addedUser, insertErr
+		return addedUser, err
 	}
-	selectErr := repository.DB.QueryRow("SELECT id, displayName, username FROM users WHERE username = ?;", user.Username).Scan(&addedUser.ID, &addedUser.Name, &addedUser.Username)
+	err = repository.DB.QueryRow(
+		"SELECT id, displayName, username FROM users WHERE username = ?;",
+		user.Username).Scan(&addedUser.ID, &addedUser.Name, &addedUser.Username)
 
-	if selectErr != nil {
+	if err != nil {
 		log.Println("[warning] unable to get user from database")
-		return addedUser, selectErr
+		return addedUser, err
 	}
 	return addedUser, nil
 }
