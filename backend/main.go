@@ -6,11 +6,11 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jhviggo/refuels"
-	"github.com/jhviggo/repository"
-	"github.com/jhviggo/users"
-	"github.com/jhviggo/vehicles"
 	"github.com/joho/godotenv"
+	"viggo.work/refuels"
+	"viggo.work/repository"
+	"viggo.work/users"
+	"viggo.work/vehicles"
 )
 
 func main() {
@@ -27,7 +27,6 @@ func main() {
 	if os.Getenv("GIN_MODE") != "release" {
 		os.Setenv("RUN_ADDRESS", "localhost")
 	}
-	fmt.Println(users.HashPasswordWithSalt("123456"))
 
 	repository.DatabaseConnect()
 	repository.TestConnection()

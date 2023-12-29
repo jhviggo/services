@@ -1,4 +1,4 @@
-module github.com/jhviggo
+module viggo.work
 
 go 1.21.5
 

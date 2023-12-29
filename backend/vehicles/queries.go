@@ -3,7 +3,7 @@ package vehicles
 import (
 	"fmt"
 
-	"github.com/jhviggo/repository"
+	"viggo.work/repository"
 )
 
 type Vehicle struct {

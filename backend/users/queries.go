@@ -3,7 +3,7 @@ package users
 import (
 	"log"
 
-	"github.com/jhviggo/repository"
+	"viggo.work/repository"
 )
 
 type User struct {

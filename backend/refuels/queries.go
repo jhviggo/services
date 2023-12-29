@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/jhviggo/repository"
+	"viggo.work/repository"
 )
 
 type Refuel struct {
