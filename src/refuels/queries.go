@@ -2,6 +2,7 @@ package refuels
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/jhviggo/repository"
 )
@@ -42,6 +43,40 @@ func fetchRefuels(userId int, vehicleId int) ([]Refuel, error) {
 	return refuels, nil
 }
 
-func insertRefuel(refuel Refuel) {
+func insertRefuel(refuel Refuel) (Refuel, error) {
+	var newRefuel Refuel
 
+	_, err := repository.DB.Exec(
+		`INSERT INTO refuels (userId, vehicleId, totalKM, tripKM, liters, cost, currency, createdAt)
+		VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
+		refuel.UserId,
+		refuel.VehicleId,
+		refuel.TotalKM,
+		refuel.TripKM,
+		refuel.Liters,
+		refuel.Cost,
+		refuel.Currency,
+	)
+
+	if err != nil {
+		return newRefuel, fmt.Errorf("unable to insert refuel")
+	}
+
+	err = repository.DB.QueryRow(
+		`SELECT id, userId, vehicleId, totalKM, tripKM, liters, cost, currency
+		FROM refuels
+		WHERE userId = ?
+		AND vehicleId = ?
+		ORDER BY id DESC
+		LIMIT 1`,
+		refuel.UserId,
+		refuel.VehicleId,
+	).Scan(&newRefuel.ID, &newRefuel.UserId, &newRefuel.VehicleId, &newRefuel.TotalKM, &newRefuel.TripKM, &newRefuel.Liters, &newRefuel.Cost, &newRefuel.Currency)
+
+	if err != nil {
+		log.Println("unable to insert refuel", err.Error())
+		return newRefuel, fmt.Errorf("unable to get new refuel")
+	}
+
+	return newRefuel, nil
 }

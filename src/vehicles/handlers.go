@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -42,6 +43,21 @@ func PostHandler(c *gin.Context) {
 	if err := c.BindJSON(&newVehicle); err != nil {
 		log.Println("[warning] unable to create vehicle")
 		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid request body"})
+		return
+	}
+
+	var missingValues []string
+	if newVehicle.EstimatedKML == 0 {
+		missingValues = append(missingValues, "estimatedKML")
+	}
+
+	if newVehicle.Model == "" {
+		missingValues = append(missingValues, "model")
+	}
+
+	if len(missingValues) > 0 {
+		errorMessage := fmt.Sprintf("unable to add refuel. Missing values [%s]", strings.Join(missingValues[:], ", "))
+		c.JSON(http.StatusBadRequest, gin.H{"message": errorMessage})
 		return
 	}
 
