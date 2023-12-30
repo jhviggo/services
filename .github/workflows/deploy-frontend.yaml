@@ -1,9 +1,9 @@
-name: Deploying backend
+name: Deploying frontend
 on: [ push ]
 
 env:
   CONTAINER_REPO: aaitho/services
-  SRC: ./backend
+  SRC: ./frontend
   INFRA: ./infrastructure
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
         env:
           DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:${{ env.BRANCH }}-${{ env.GITHUB_SHA_HASH  }}
         run: |
-          mv ${{ env.INFRA }}/DockerfileBackend ${{ env.SRC }}/Dockerfile
+          mv ${{ env.INFRA }}/DockerfileFrontend ${{ env.SRC }}/Dockerfile
           docker build -t $DOCKER_IMAGE ${{ env.SRC }}
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push $DOCKER_IMAGE
@@ -56,7 +56,7 @@ jobs:
           CONTAINER_REPO: ${{ env.CONTAINER_REPO }}
           GITHUB_SHA: ${{ env.GITHUB_SHA_HASH }}
         run: |
-          envsubst < ci-backend.yaml > def.yaml
+          envsubst < ci-frontend.yaml > def.yaml
           kubectl apply -f def.yaml
       
       - name: Wait for service to be ready

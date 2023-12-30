@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${BRANCH}-frontend
+spec:
+  selector:
+    matchLabels:
+      app: ${BRANCH}-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ${BRANCH}-frontend
+    spec:
+      containers:
+        - name: ${BRANCH}-frontend
+          image: ${CONTAINER_REPO}:frontend-${BRANCH}-${GITHUB_SHA}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            failureThreshold: 3
+            periodSeconds: 10
+          env:
+            - name: DATABASE_SOURCE
+              value: mysql
+            - name: DATABASE_NAME
+              value: main
+            - name: DATABASE_USERNAME
+              value: root
+            - name: PORT
+              value: "8080"
+            - name: GIN_MODE
+              value: release
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+          ports:
+            - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${BRANCH}-frontend
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: ${BRANCH}-frontend
+
+---
+
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: ${BRANCH}-frontend
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ${BRANCH}-frontend.api.viggo.work
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ${BRANCH}-frontend
+            port:
+              number: 80
