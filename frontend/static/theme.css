@@ -1,0 +1,31 @@
+:root {
+  font-family: 'Open Sans', sans-serif;
+
+  --primary-blue: #015fbf;
+  --error: #dc3545;
+}
+
+body {
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+}
+
+h1 {
+  margin: 0;
+}
+
+/* Color classes */
+.primary-blue {
+  color: var(--primary-blue);
+}
+
+/* element classes */
+.service-name {
+  font-weight: normal;
+  color: var(--primary-blue);
+}
+
+.error {
+  color: var(--error);
+}
