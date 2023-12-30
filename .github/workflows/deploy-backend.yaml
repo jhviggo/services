@@ -1,9 +1,9 @@
-name: Deploying Services
+name: Deploying backend
 on: [ push ]
 
 env:
   CONTAINER_REPO: aaitho/services
-  SRC: ./src
+  SRC: ./backend
   INFRA: ./infrastructure
 
 jobs:
