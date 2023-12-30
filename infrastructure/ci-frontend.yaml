@@ -17,26 +17,10 @@ spec:
           image: ${CONTAINER_REPO}:frontend-${BRANCH}-${GITHUB_SHA}
           readinessProbe:
             httpGet:
-              path: /health
+              path: /
               port: 8080
             failureThreshold: 3
             periodSeconds: 10
-          env:
-            - name: DATABASE_SOURCE
-              value: mysql
-            - name: DATABASE_NAME
-              value: main
-            - name: DATABASE_USERNAME
-              value: root
-            - name: PORT
-              value: "8080"
-            - name: GIN_MODE
-              value: release
-            - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secret
-                  key: password
           ports:
             - containerPort: 8080
 
