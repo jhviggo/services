@@ -28,6 +28,12 @@ spec:
               value: main
             - name: DATABASE_USERNAME
               value: root
+            - name: OTEL_ENDPOINT
+              value: "jaeger.observability:4317"
+            - name: OTEL_SERVICE_NAME
+              value: refuel
+            - name: BRANCH
+              value: ${BRANCH}
             - name: PORT
               value: "8080"
             - name: GIN_MODE
