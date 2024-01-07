@@ -59,3 +59,18 @@ func fetchUsers() ([]User, error) {
 
 	return users, nil
 }
+
+func validateUserExists(username string, password string) bool {
+	var user User
+
+	err := repository.DB.QueryRow("SELECT id, username, passwd FROM users WHERE username = ? LIMIT 1;", username).Scan(&user.ID, &user.Username, &user.Password)
+	if err != nil {
+		return false
+	}
+
+	if err = ValidatePassword(user.Password, password); err != nil {
+		return false
+	}
+
+	return true
+}

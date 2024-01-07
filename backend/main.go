@@ -52,6 +52,8 @@ func main() {
 
 	router := gin.Default()
 	router.Use(otelgin.Middleware(serviceName + "-" + branch))
+	router.Use(users.AuthMiddleware())
+	router.POST("/v1/login", users.Login)
 
 	router.GET("/v1/users", users.GetHandler)
 	router.POST("/v1/users", users.PostHandler)

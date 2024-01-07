@@ -56,3 +56,50 @@ func PostHandler(c *gin.Context) {
 
 	c.JSON(http.StatusOK, user)
 }
+
+func Login(c *gin.Context) {
+	var userAuth User
+
+	if err := c.BindJSON(&userAuth); err != nil {
+		fmt.Println("User:", userAuth.Username, userAuth.Password)
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Missing username or password"})
+		return
+	}
+
+	userExists := validateUserExists(userAuth.Username, userAuth.Password)
+
+	if !userExists {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid username or password"})
+		return
+	}
+
+	token, err := CreateToken(userAuth.Username)
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to create token"})
+		return
+	}
+
+	c.String(http.StatusOK, token)
+}
+
+func AuthMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if c.Request.URL.Path == "/v1/login" {
+			return
+		}
+
+		authHeader := c.GetHeader("Authorization")
+		if authHeader == "" {
+			c.JSON(http.StatusUnauthorized, gin.H{"message": "Missing Authorization header"})
+			c.Abort()
+			return
+		}
+
+		err := VerifyToken(c.GetHeader("Authorization"))
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid token"})
+			c.Abort()
+		}
+	}
+}
