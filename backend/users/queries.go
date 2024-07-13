@@ -1,6 +1,7 @@
 package users
 
 import (
+	"fmt"
 	"log"
 
 	"viggo.work/repository"
@@ -11,6 +12,7 @@ type User struct {
 	Name     string `json:"name"`
 	Username string `json:"username"`
 	Password string `json:"password,omitempty"`
+	Token    string `json:"token,omitempty"`
 }
 
 func insertUser(user User) (User, error) {
@@ -60,17 +62,17 @@ func fetchUsers() ([]User, error) {
 	return users, nil
 }
 
-func validateUserExists(username string, password string) bool {
+func fetchValidUser(username string, password string) (User, error) {
 	var user User
+	var userPassword string
 
-	err := repository.DB.QueryRow("SELECT id, username, passwd FROM users WHERE username = ? LIMIT 1;", username).Scan(&user.ID, &user.Username, &user.Password)
+	err := repository.DB.QueryRow("SELECT id, username, displayName, passwd FROM users WHERE username = ? LIMIT 1;", username).Scan(&user.ID, &user.Username, &user.Name, &userPassword)
 	if err != nil {
-		return false
+		return user, fmt.Errorf("user does not exists")
 	}
 
-	if err = ValidatePassword(user.Password, password); err != nil {
-		return false
+	if err = ValidatePassword(userPassword, password); err != nil {
+		return user, fmt.Errorf("invalid password")
 	}
-
-	return true
+	return user, nil
 }

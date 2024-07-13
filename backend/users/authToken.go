@@ -41,5 +41,7 @@ func VerifyToken(tokenString string) error {
 		return fmt.Errorf("invalid token")
 	}
 
+	// TODO add expired token check
+
 	return nil
 }

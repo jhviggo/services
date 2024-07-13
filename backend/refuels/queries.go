@@ -19,7 +19,7 @@ type Refuel struct {
 }
 
 func fetchRefuels(userId int, vehicleId int) ([]Refuel, error) {
-	var refuels []Refuel
+	var refuels []Refuel = make([]Refuel, 0)
 
 	rows, err := repository.DB.Query(
 		`SELECT id, userId, vehicleId, totalKM, tripKM, liters, cost, currency

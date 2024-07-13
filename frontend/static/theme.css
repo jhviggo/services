@@ -1,8 +1,19 @@
 :root {
   font-family: 'Open Sans', sans-serif;
 
+  /* Colors */
   --primary-blue: #015fbf;
-  --error: #dc3545;
+  --gray: #6c757d;
+  --green: #198754;
+  --red: #dc3545;
+  --yellow: #ffc107;
+  --light-blue: #0dcaf0;
+
+  /* Levels */
+  --debug: var(--gray);
+  --info: var(--light-blue);
+  --warn: var(--yellow);
+  --error: var(--red);
 }
 
 body {

@@ -66,9 +66,8 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	userExists := validateUserExists(userAuth.Username, userAuth.Password)
-
-	if !userExists {
+	user, err := fetchValidUser(userAuth.Username, userAuth.Password)
+	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid username or password"})
 		return
 	}
@@ -80,7 +79,8 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.String(http.StatusOK, token)
+	user.Token = token
+	c.JSON(http.StatusOK, user)
 }
 
 func AuthMiddleware() gin.HandlerFunc {
@@ -89,14 +89,14 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		authHeader := c.GetHeader("Authorization")
+		authHeader := strings.Replace(c.GetHeader("Authorization"), "Bearer ", "", 1)
 		if authHeader == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{"message": "Missing Authorization header"})
 			c.Abort()
 			return
 		}
 
-		err := VerifyToken(c.GetHeader("Authorization"))
+		err := VerifyToken(authHeader)
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid token"})
 			c.Abort()

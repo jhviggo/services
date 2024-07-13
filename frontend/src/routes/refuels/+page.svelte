@@ -2,22 +2,24 @@
   import Section from '@components/section.svelte';
   import ButtonIcon from '@components/buttonIcon.svelte';
   import { onMount } from 'svelte';
-  import { fetchVehicles } from '@api/vehicles';
+  import { addRefuel, fetchRefuels, type Refuel } from '@api/refuels';
+  import RefuelList from '@components/refuelList.svelte';
+  import Spinner from '@components/spinner.svelte';
 
   let loading: boolean = false;
 
   let values: { [key: string]: string | undefined } = {
     vehicle: undefined,
-    totalkm: undefined,
-    tripkm: undefined,
+    totalKM: undefined,
+    tripKM: undefined,
     liters: undefined,
     cost: undefined,
   };
 
   let shownErrors: { [key: string]: boolean } = {
     vehicles: true,
-    totalkm: false,
-    tripkm: false,
+    totalKM: false,
+    tripKM: false,
     liters: false,
     cost: false,
   };
@@ -25,7 +27,6 @@
   let vehicles: string[] = ['suzuki', 'kawasaki'];
 
   onMount(async () => {
-    await fetchVehicles();
     shownErrors.vehicle = false;
   });
 
@@ -33,26 +34,42 @@
     shownErrors[value] = n !== Number(n).toFixed(2);
   }
 
-  function addRefuel() {
-    validateNumber(values.totalkm, 'totalkm');
-    validateNumber(values.tripkm, 'tripkm');
+  function handleAddRefuel() {
+    validateNumber(values.totalKM, 'totalKM');
+    validateNumber(values.tripKM, 'tripKM');
     validateNumber(values.liters, 'liters');
     validateNumber(values.cost, 'cost');
 
     const allValid = Object.values(shownErrors).reduce((a, b) => !a && !b);
 
+    addRefuel({
+      vehicleId: 18,
+      totalKM: Number(values.totalKM),
+      tripKM: Number(values.tripKM),
+      liters: Number(values.liters),
+      cost: Number(values.cost),
+      currency: values.currency,
+    } as Refuel);
     if (allValid) {
-      // POST
+      // TODO move post in here
     }
-    console.log('values', values);
+    console.log('values', values, allValid, shownErrors);
   }
 </script>
 
 <Section>
+{#await fetchRefuels()}
+  <Spinner />
+{:then refuels} 
+  <RefuelList {refuels} />
+{/await}
+</Section>
+    
+<Section>
   <h1>Add a new refuel</h1>
   <small>Note: only two digits after point is allowed. e.g. 155.25.</small>
   <hr>
-  <form on:submit|preventDefault={addRefuel} action="POST">
+  <form on:submit|preventDefault={handleAddRefuel} action="POST">
     <label>
       Vehicle
       <select bind:value={values.vehicle} class={loading ? 'skeleton' : ''}>
@@ -68,14 +85,14 @@
 
     <label>
       Total vehicle KM
-      <input on:change={() => validateNumber(values.totalkm, 'totalkm')} bind:value={values.totalkm} placeholder="Vehicle's kilometers" class={shownErrors.totalkm ? 'invalid' : ''} type="text">
-      <span hidden={!shownErrors.totalkm} class="error">Invalid total distance</span>
+      <input on:change={() => validateNumber(values.totalKM, 'totalKM')} bind:value={values.totalKM} placeholder="Vehicle's kilometers" class={shownErrors.totalKM ? 'invalid' : ''} type="text">
+      <span hidden={!shownErrors.totalKM} class="error">Invalid total distance</span>
     </label>
 
     <label>
       Trip KM
-      <input on:change={() => validateNumber(values.tripkm, 'tripkm')} bind:value={values.tripkm} placeholder="Trip distance" class={shownErrors.tripkm ? 'invalid' : ''} type="text">
-      <span hidden={!shownErrors.tripkm} class="error">Invalid trip distance</span>
+      <input on:change={() => validateNumber(values.tripKM, 'tripKM')} bind:value={values.tripKM} placeholder="Trip distance" class={shownErrors.tripKM ? 'invalid' : ''} type="text">
+      <span hidden={!shownErrors.tripKM} class="error">Invalid trip distance</span>
     </label>
 
     <label>
