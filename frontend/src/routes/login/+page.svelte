@@ -64,7 +64,7 @@
     width: 100%;
   }
 
-  input, select {
+  input {
     padding: 0.5rem 0.75rem;
     margin-bottom: 1.25rem;
   }
@@ -81,24 +81,5 @@
 
   .invalid:focus-visible {
     outline-color: var(--error);
-  }
-
-  .skeleton {
-    background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 0.5) 50%,
-        rgba(255, 255, 255, 0) 80%
-      ),
-      #ddd;
-    background-repeat: repeat-y;
-    background-size: 50px 500px;
-    animation: shine 1.5s infinite;
-  }
-
-  @keyframes shine {
-    100% {
-      background-position: 100%;
-    }
   }
 </style>

@@ -85,7 +85,7 @@ func Login(c *gin.Context) {
 
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if c.Request.URL.Path == "/v1/login" {
+		if c.Request.URL.Path == "/v1/login" || c.Request.URL.Path == "/health" {
 			return
 		}
 
