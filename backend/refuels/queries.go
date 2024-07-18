@@ -16,16 +16,18 @@ type Refuel struct {
 	Liters    float32 `json:"liters"`
 	Cost      float32 `json:"cost"`
 	Currency  string  `json:"currency"`
+	CreatedAt string  `json:"createdAt"`
 }
 
 func fetchRefuels(userId int, vehicleId int) ([]Refuel, error) {
 	var refuels []Refuel = make([]Refuel, 0)
 
 	rows, err := repository.DB.Query(
-		`SELECT id, userId, vehicleId, totalKM, tripKM, liters, cost, currency
+		`SELECT id, userId, vehicleId, totalKM, tripKM, liters, cost, currency, createdAt
 		FROM refuels
 		WHERE userId = ?
-		AND vehicleId = ?`,
+		AND vehicleId = ?
+		ORDER BY createdAt DESC`,
 		userId,
 		vehicleId,
 	)
@@ -36,7 +38,16 @@ func fetchRefuels(userId int, vehicleId int) ([]Refuel, error) {
 
 	for rows.Next() {
 		var myRefuel Refuel
-		rows.Scan(&myRefuel.ID, &myRefuel.UserId, &myRefuel.VehicleId, &myRefuel.TotalKM, &myRefuel.TripKM, &myRefuel.Liters, &myRefuel.Cost, &myRefuel.Currency)
+		rows.Scan(
+			&myRefuel.ID,
+			&myRefuel.UserId,
+			&myRefuel.VehicleId,
+			&myRefuel.TotalKM,
+			&myRefuel.TripKM,
+			&myRefuel.Liters,
+			&myRefuel.Cost,
+			&myRefuel.Currency,
+			&myRefuel.CreatedAt)
 		refuels = append(refuels, myRefuel)
 	}
 

@@ -11,6 +11,7 @@ export interface Refuel {
   liters: number,
   cost: number,
   currency: string,
+  createdAt?: string,
 }
 
 export const refuelStore = writable<Refuel>();
@@ -28,6 +29,7 @@ export async function fetchRefuels(): Promise<Refuel[]> {
         'Content-Type': 'application/json',
       },
     });
+    if (response.status !== 200) throw new Error();
     const data = await response.json();
     return data;
   } catch (err) {
@@ -40,7 +42,6 @@ export async function fetchRefuels(): Promise<Refuel[]> {
 }
 
 export async function addRefuel(refuel: Refuel): Promise<boolean> {
-  console.log('lets gooo');
   const user = get(userStore);
   if (!user?.token) return false;
 
@@ -57,7 +58,7 @@ export async function addRefuel(refuel: Refuel): Promise<boolean> {
         ...refuel,
       }),
     });
-    console.log('res', response);
+    if (response.status !== 200) throw new Error();
   } catch (err) {
     addError({
       level: Levels.ERROR,

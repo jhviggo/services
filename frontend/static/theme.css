@@ -3,6 +3,7 @@
 
   /* Colors */
   --primary-blue: #015fbf;
+  --primary-blue-faint: rgba(1, 95, 191, 0.1);
   --gray: #6c757d;
   --green: #198754;
   --red: #dc3545;
@@ -39,4 +40,8 @@ h1 {
 
 .error {
   color: var(--error);
+}
+
+.bold {
+  font-weight: bold;
 }
