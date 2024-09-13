@@ -1,12 +1,10 @@
 <script lang="ts">
   import { type Refuel } from '@api/refuels';
-    import RefuelListfolder from './refuelListfolder.svelte';
+  import RefuelListfolder from './refuelListfolder.svelte';
 
   export let refuels: Refuel[];
 </script>
 
-<h1>Refuels</h1>
-<hr>
 <div class="container">
   <div class="scroller">
     {#each refuels as refuel}

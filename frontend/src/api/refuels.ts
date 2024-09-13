@@ -4,8 +4,8 @@ import { loadStoredUser, userStore } from './users';
 import { addError, Levels } from '@lib/errorHandler';
 
 export interface Refuel {
-  id?: number;
-  vehicleId: number;
+  id?: number | string;
+  vehicleId: number | string;
   totalKM: number,
   tripKM: number,
   liters: number,
@@ -16,12 +16,11 @@ export interface Refuel {
 
 export const refuelStore = writable<Refuel>();
 
-export async function fetchRefuels(): Promise<Refuel[]> {
+export async function fetchRefuels(vehicleId: number | string): Promise<Refuel[]> {
   loadStoredUser();
   const user = get(userStore);
   if (!user?.token) return [];
 
-  const vehicleId = 18;
   try {
     const response = await fetch(`${API_URL}/v1/users/${user.id}/vehicles/${vehicleId}/refuels`, {
       headers: {
@@ -45,10 +44,8 @@ export async function addRefuel(refuel: Refuel): Promise<boolean> {
   const user = get(userStore);
   if (!user?.token) return false;
 
-  const vehicleId = 18;
-
   try {
-    const response = await fetch(`${API_URL}/v1/users/${user.id}/vehicles/${vehicleId}/refuels`, {
+    const response = await fetch(`${API_URL}/v1/users/${user.id}/vehicles/${refuel.vehicleId}/refuels`, {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${user.token}`

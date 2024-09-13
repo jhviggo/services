@@ -2,7 +2,15 @@
   import Header from '@components/header.svelte';
   import ErrorToast from '@components/errorToast.svelte';
   import { loadStoredUser } from '@api/users';
-  import { page } from '$app/stores';
+  import { beforeUpdate, } from 'svelte';
+
+  let loaded = false;
+  beforeUpdate(() => {
+    if (!loaded) {
+      loadStoredUser();
+      loaded = true;
+    }
+  });
 </script>
 
 <main>

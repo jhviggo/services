@@ -3,18 +3,37 @@
   import ButtonIcon from '@components/buttonIcon.svelte';
   import { onMount } from 'svelte';
   import { addRefuel, fetchRefuels, type Refuel } from '@api/refuels';
+  import { listVehicles, type IVehicle } from '@api/vehicles';
   import RefuelList from '@components/refuelList.svelte';
   import Spinner from '@components/spinner.svelte';
+  import Vehicle from '@components/vehicle.svelte';
 
   let loading: boolean = false;
   let refuels: Refuel[];
   let addRefuelIsOpen: boolean = false;
+  let vehicleList: IVehicle[] = [];
+  let selectedVehicle: IVehicle;
 
-  onMount(updateRefuels);
+  $: if(selectedVehicle) {
+    console.log(selectedVehicle);
+    updateRefuels();
+  }
+
+  onMount(async () => {
+    loading = true;
+    vehicleList = await listVehicles();
+    console.log('vehicles', vehicleList);
+    if (vehicleList.length > 0) {
+      selectedVehicle = vehicleList[0];
+      refuels = await fetchRefuels(vehicleList[0].id);
+    }
+    console.log('refuels', refuels);
+    loading = false;
+  });
 
   async function updateRefuels() {
     loading = true;
-    refuels = await fetchRefuels();
+    refuels = await fetchRefuels(selectedVehicle.id);
     loading = false;
   }
 
@@ -34,7 +53,6 @@
     cost: false,
   };
 
-  let vehicles: string[] = ['suzuki', 'kawasaki'];
 
   onMount(async () => {
     shownErrors.vehicle = false;
@@ -58,7 +76,7 @@
 
     if (allValid) {
       const ok = await addRefuel({
-        vehicleId: 18,
+        vehicleId: selectedVehicle.id,
         totalKM: Number(values.totalKM),
         tripKM: Number(values.tripKM),
         liters: Number(values.liters),
@@ -68,12 +86,19 @@
 
       if (ok) {
         updateRefuels();
+        values = {};
       }
     }
   }
 </script>
 
 <Section>
+  <h1>Selected bike</h1>
+  <Vehicle bind:selectedVehicle={selectedVehicle} vehicles={vehicleList} />
+</Section>
+
+<Section>
+  <h1>Refuels</h1>
   {#if loading}
     <Spinner />
   {:else if !loading && !refuels?.length}
@@ -92,8 +117,8 @@
       <icon class="material-symbols-outlined">keyboard_arrow_down</icon>
     {/if}
   </button>
-  <hr>
   {#if addRefuelIsOpen}
+    <hr>
     <small>Note: only two digits after point is allowed. e.g. 155.25.</small>
     <form on:submit|preventDefault={handleAddRefuel} action="POST">
       <label>
@@ -102,8 +127,8 @@
           {#if loading}
             <option value="Loading">Loading...</option>
           {:else}
-            {#each vehicles as vehicle}
-              <option value={vehicle}>{ vehicle }</option>
+            {#each vehicleList as vehicle}
+              <option value={vehicle.id}>{ vehicle.model }</option>
             {/each}
           {/if}
         </select>

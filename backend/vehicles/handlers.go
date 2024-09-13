@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetHandler(c *gin.Context) {
+func ListVehicles(c *gin.Context) {
 	vehicleOwner := c.Param("user")
 	_, err := userIdAsInt(vehicleOwner)
 

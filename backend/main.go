@@ -58,7 +58,7 @@ func main() {
 
 	router.GET("/v1/users", users.GetHandler)
 	router.POST("/v1/users", users.PostHandler)
-	router.GET("/v1/users/:user/vehicles", vehicles.GetHandler)
+	router.GET("/v1/users/:user/vehicles", vehicles.ListVehicles)
 	router.POST("/v1/users/:user/vehicles", vehicles.PostHandler)
 	router.GET("/v1/users/:user/vehicles/:vehicle/refuels", refuels.GetHandler)
 	router.POST("/v1/users/:user/vehicles/:vehicle/refuels", refuels.PostHandler)

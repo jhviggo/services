@@ -1,4 +1,4 @@
-import { writable, get } from 'svelte/store';
+import { writable } from 'svelte/store';
 import { API_URL } from '@lib/env';
 import { addError, Levels } from '@lib/errorHandler';
 
@@ -11,21 +11,17 @@ interface User {
 
 export const userStore = writable<User>();
 
-let userHasBeenUpdated = false;
+userStore.subscribe((value) => {
+  if (value) {
+    localStorage.setItem('user', JSON.stringify(value));
+  }
+});
 
 export function loadStoredUser() {
-  if (userHasBeenUpdated) return;
-
-  const storedUser = localStorage.getItem('user');
+  const storedUser = localStorage?.getItem('user');
   if (storedUser && storedUser !== "undefined") {
     userStore.set(JSON.parse(storedUser));
-    userHasBeenUpdated = true;
   }
-
-  userStore.subscribe((value) => {
-    if (value)
-      localStorage.setItem('user', JSON.stringify(value));
-  });
 }
 
 export async function login(username: string, password: string): Promise<boolean> {

@@ -17,8 +17,10 @@
 
 <div class="container">
   <button on:click={toggleFolder}>
-    <span class="text">
+    <div class="map">
       <icon class="material-symbols-outlined">map</icon>
+    </div>
+    <span>
       {#if isOpen}
         ID: {refuel.id}
       {:else}
@@ -48,7 +50,8 @@
 
 <style>
   .container {
-    border: 1px solid var(--primary-blue);
+    border: 1px solid gray;
+    border-radius: 0.2rem;
     overflow-y: hidden;
   }
 
@@ -60,12 +63,24 @@
     align-items: center;
     padding: 0;
     width: 100%;
-    padding: 0.25rem;
+    height: 3rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    text-align: start;
+    gap: 0.5rem;
   }
 
-  .text {
+  .map {
+    height: 3rem;
+    width: 3rem;
+    background-color: var(--primary-blue);
     display: flex;
     align-items: center;
+    justify-content: center;
+  }
+
+  .map icon {
+    color: white;
   }
   
   .content {
