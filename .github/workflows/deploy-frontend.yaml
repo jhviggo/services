@@ -2,9 +2,10 @@ name: Deploying frontend
 on:
   push:
     paths:
-      - 'frontend/**'
-      - 'infrastructure/**'
-      - '.github/workflows/deploy-frontend.yaml'
+      - 'never'
+      #- 'frontend/**'
+      #- 'infrastructure/**'
+      #- '.github/workflows/deploy-frontend.yaml'
 
 env:
   CONTAINER_REPO: aaitho/services

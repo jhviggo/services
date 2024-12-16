@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: test-go-service
+spec:
+  selector:
+    matchLabels:
+      app: test-go-service
+  serviceName: my-test-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: test-go-service
+    spec:
+      containers:
+      - name: my-test-api
+        image: registry.digitalocean.com/k8s-test-go-sqlite/test-go-service:3
+        ports:
+        - containerPort: 1337
+        volumeMounts:
+        - mountPath: "/data"
+          name: database-volume
+  volumeClaimTemplates:
+  - metadata:
+      name: database-volume
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 50Gi
+      storageClassName: do-block-storage 
+            
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-go-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 1337
+  selector:
+    app: test-go-service
+    
+---
+
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: test-go-service
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: do-k8s.viggo.work
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: test-go-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+      - do-k8s.viggo.work 
+      secretName: letsencrypt-prod

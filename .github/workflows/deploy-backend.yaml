@@ -2,9 +2,10 @@ name: Deploying backend
 on:
   push:
     paths:
-      - 'backend/**'
-      - 'infrastructure/**'
-      - '.github/workflows/deploy-backend.yaml'
+      - 'never'
+      #- 'backend/**'
+      #- 'infrastructure/**'
+      #- '.github/workflows/deploy-backend.yaml'
 
 env:
   CONTAINER_REPO: aaitho/services
