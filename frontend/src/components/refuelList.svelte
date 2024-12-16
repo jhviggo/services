@@ -1,6 +1,9 @@
 <script lang="ts">
   import { type Refuel } from '@api/refuels';
   import RefuelListfolder from './refuelListfolder.svelte';
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
 
   export let refuels: Refuel[];
 </script>
@@ -8,7 +11,7 @@
 <div class="container">
   <div class="scroller">
     {#each refuels as refuel}
-      <RefuelListfolder {refuel} />
+      <RefuelListfolder on:delete={(e) => dispatch('delete', e.detail)} {refuel} />
     {/each}
   </div>
 </div>

@@ -1,7 +1,10 @@
 <script lang="ts">
   import { type Refuel } from '@api/refuels';
+  import { createEventDispatcher } from 'svelte';
 
   export let refuel: Refuel;
+
+  const dispatch = createEventDispatcher();
 
   let isOpen: boolean = false;
 
@@ -11,41 +14,39 @@
 
   function formatDate(d: string | undefined): string {
     if (!d) return '';
-    return d.split(' ')[0];
+    return d.split('T')[0];
   }
 </script>
 
 <div class="container">
-  <button on:click={toggleFolder}>
+  <button class="refuel-button" on:click={toggleFolder}>
     <div class="map">
       <icon class="material-symbols-outlined">map</icon>
     </div>
     <span>
-      {#if isOpen}
-        ID: {refuel.id}
-      {:else}
-        {refuel.tripKM}Km trip ({refuel.cost}{refuel.currency})
-      {/if}
+      {refuel.trip_km}Km trip ({refuel.cost}{refuel.currency})
     </span>
 
     {#if isOpen}
-      <icon class="material-symbols-outlined">keyboard_arrow_up</icon>
+      <icon class="material-symbols-outlined arrow">keyboard_arrow_up</icon>
     {:else}
-      <icon class="material-symbols-outlined">keyboard_arrow_down</icon>
+      <icon class="material-symbols-outlined arrow">keyboard_arrow_down</icon>
     {/if}
   </button>
   
  
   {#if isOpen}
     <div class="content">
-      <span class="bold">Trip:</span><span>{refuel.tripKM} km</span>
-      <span class="bold">Price:</span><span>{refuel.cost} {refuel.currency.toLocaleLowerCase()}</span>
+      <span class="bold">Trip:</span><span>{refuel.trip_km} km</span>
+      <span class="bold">Price:</span><span>{refuel.cost} {refuel.currency?.toLocaleLowerCase()}</span>
       <span class="bold">Liters:</span><span>{refuel.liters} L</span>
-      <span class="bold">Odometer:</span><span>{refuel.totalKM} Km</span>
-      <span class="bold">Date:</span><span>{formatDate(refuel.createdAt)}</span>
+      <span class="bold">Odometer:</span><span>{refuel.total_km} Km</span>
+      <span class="bold">Date:</span><span>{formatDate(refuel.created_at)}</span>
+      <span class="bold">ID:</span><span>{refuel.id}</span>
+      
+      <button class="btn btn-danger" on:click={() => dispatch('delete', refuel)}><icon class="material-symbols-outlined">delete</icon> Delete</button>
     </div>
   {/if}
-
 </div>
 
 <style>
@@ -53,9 +54,17 @@
     border: 1px solid gray;
     border-radius: 0.2rem;
     overflow-y: hidden;
+
+    & .arrow {
+      margin-right: 0.5rem;
+    }
+
+    & .delete {
+      color: var(--red);
+    }
   }
 
-  button {
+  .refuel-button {
     background-color: unset;
     border: unset;
     display: flex;
@@ -65,7 +74,7 @@
     width: 100%;
     height: 3rem;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr auto auto;
     text-align: start;
     gap: 0.5rem;
   }
@@ -88,5 +97,6 @@
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0.5rem;
+    border-left: 4px solid var(--primary-blue);
   }
 </style>

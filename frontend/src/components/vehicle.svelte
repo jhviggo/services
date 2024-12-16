@@ -34,13 +34,15 @@
         </icon>
       </div>
       <span>{selectedVehicle.model}</span>
-      <icon class="material-symbols-outlined">
-        {#if vehicleListOpen}
-          keyboard_arrow_up
-        {:else}
-          keyboard_arrow_down
-        {/if}
-      </icon>
+      {#if vehicles.length > 1}
+        <icon class="material-symbols-outlined">
+          {#if vehicleListOpen}
+            keyboard_arrow_up
+          {:else}
+            keyboard_arrow_down
+          {/if}
+        </icon>
+      {/if}
     </button>
   </div>
 {/if}

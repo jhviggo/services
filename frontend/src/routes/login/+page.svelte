@@ -17,7 +17,7 @@
   async function doLogin() {
     const loggedIn = await login(user.username, user.password);
     if (loggedIn) {
-      goto('/');
+      goto('/refuels');
     }
   }
 </script>

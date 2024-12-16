@@ -36,6 +36,7 @@
   <div class="backdrop" aria-hidden="true" on:click={toggleMenu}></div>
   <div class="menu">
     <div class="header">
+      <span class="bold">{ $userStore.name || 'Menu' }</span>
       <button class="burger" on:click={toggleMenu}>
         <icon class="material-symbols-outlined">
           close
@@ -43,49 +44,43 @@
       </button>
     </div>
     <div class="items">
-      <a href="/" class="link">
+      <a href="/" class="btn btn-primary justify-left">
         <span class="material-symbols-outlined">
           house
         </span>
         Home
       </a>
-      <a href="/about" class="link">
-        <span class="material-symbols-outlined">
-          info
-        </span>
-        About
-      </a>
       {#if $userStore?.token}
-        <span class="headline">Refuel</span>
-        <a href="/refuels" class="link">
+        <span class="bold">Refuel</span>
+        <a href="/refuels" class="btn btn-primary justify-left">
           <span class="material-symbols-outlined">
             local_gas_station
           </span>
           Refuels
         </a>
-        <a href="/dashboard" class="link">
+        <a href="/dashboard" class="btn btn-primary justify-left">
           <span class="material-symbols-outlined">
             analytics
           </span>
           Dashboard
         </a>
       {/if}
-      <span class="headline">User</span>
+      <span class="bold">User</span>
       {#if $userStore?.token}
-        <a href="/profile" class="link">
+        <a href="/profile" class="btn btn-primary justify-left">
           <span class="material-symbols-outlined">
             account_circle
           </span>
           Profile
         </a>
-        <button class="link" on:click={handleLogout}>
+        <button class="btn btn-danger justify-left" on:click={handleLogout}>
           <span class="material-symbols-outlined">
             lock
           </span>
           Logout
         </button>
       {:else}
-        <a href="/login" class="link">
+        <a href="/login" class="btn btn-primary justify-left">
           <span class="material-symbols-outlined">
             lock
           </span>
@@ -135,6 +130,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.75);
+    z-index: 98;
   }
 
   @keyframes slide-in {
@@ -144,6 +140,7 @@
 
   .menu {
     position: fixed;
+    z-index: 99;
     top: 0;
     right: 0;
     height: 100%;
@@ -155,8 +152,13 @@
 
   .menu .header {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     padding-top: 1rem;
+    padding-left: 1rem;
+  }
+
+  .menu .bold {
+    font-weight: bold;
   }
 
   .menu .items {
@@ -165,21 +167,9 @@
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
-
-  .menu .items .headline {
-    font-weight: bold;
-  }
-
-  .menu .items .link {
-    border: 1px solid black;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    margin-top: 0.2rem;
-    margin-bottom: 0.2rem;
-    display: flex;
-    text-decoration: unset;
-    color: var(--primary-blue);
-    font-size: 1rem;
+  
+  .btn {
+    margin-bottom: 0.5rem;
   }
 
   .menu .items .link span {

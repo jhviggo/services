@@ -24,7 +24,7 @@ func GetRefuelsForVehicle(w http.ResponseWriter, r *http.Request) {
 	db := lib.GetDatabase()
 
 	var refuels []models.Refuel
-	result := db.Find(&refuels, "vehicle_id = ?", vehicleId)
+	result := db.Order("created_at DESC").Find(&refuels, "vehicle_id = ?", vehicleId)
 	if result.Error != nil {
 		lib.HttpError(w, http.StatusInternalServerError, "Unable to get refuels")
 		return
@@ -66,6 +66,11 @@ func AddRefuel(w http.ResponseWriter, r *http.Request) {
 
 	err = json.NewDecoder(r.Body).Decode(&refuel)
 	if err != nil {
+		lib.HttpError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
+	if refuel.TotalKM == 0 || refuel.TripKM == 0 || refuel.Liters == 0 || refuel.Cost == 0 {
 		lib.HttpError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}

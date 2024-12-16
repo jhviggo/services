@@ -26,7 +26,7 @@ export function loadStoredUser() {
 
 export async function login(username: string, password: string): Promise<boolean> {
   try {
-    const response = await fetch(`${API_URL}/v1/login`, {
+    const response = await fetch(`${API_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

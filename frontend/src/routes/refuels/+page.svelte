@@ -2,20 +2,22 @@
   import Section from '@components/section.svelte';
   import ButtonIcon from '@components/buttonIcon.svelte';
   import { onMount } from 'svelte';
-  import { addRefuel, fetchRefuels, type Refuel } from '@api/refuels';
+  import { addRefuel, fetchRefuels, deleteRefuel, type Refuel } from '@api/refuels';
   import { listVehicles, type IVehicle } from '@api/vehicles';
   import RefuelList from '@components/refuelList.svelte';
   import Spinner from '@components/spinner.svelte';
   import Vehicle from '@components/vehicle.svelte';
+  import ConfirmationPrompt from '@components/confirmationPrompt.svelte';
 
   let loading: boolean = false;
   let refuels: Refuel[];
   let addRefuelIsOpen: boolean = false;
   let vehicleList: IVehicle[] = [];
   let selectedVehicle: IVehicle;
+  let deletingRefuel: Refuel;
+  let showDeletingRefuelPrompt: boolean = false;
 
   $: if(selectedVehicle) {
-    console.log(selectedVehicle);
     updateRefuels();
   }
 
@@ -39,56 +41,44 @@
 
   let values: { [key: string]: string | undefined } = {
     vehicle: undefined,
-    totalKM: undefined,
-    tripKM: undefined,
+    total_km: undefined,
+    trip_km: undefined,
     liters: undefined,
     cost: undefined,
   };
 
-  let shownErrors: { [key: string]: boolean } = {
-    vehicles: false,
-    totalKM: false,
-    tripKM: false,
-    liters: false,
-    cost: false,
-  };
+  async function handleAddRefuel() {
+    const ok = await addRefuel({
+      vehicle_id: selectedVehicle.id,
+      total_km: Number(values.total_km),
+      trip_km: Number(values.trip_km),
+      liters: Number(values.liters),
+      cost: Number(values.cost),
+      currency: values.currency,
+    } as Refuel);
 
-
-  onMount(async () => {
-    shownErrors.vehicle = false;
-  });
-
-  function validateNumber(n: string | undefined, value: string) {
-    if (n?.includes('.')) {
-      shownErrors[value] = n !== Number(n).toFixed(2);
-    } else {
-      shownErrors[value] = n !== Number(n).toString();
+    if (ok) {
+      await updateRefuels();
+      values = {};
+      addRefuelIsOpen = false;
     }
+    
   }
 
-  async function handleAddRefuel() {
-    validateNumber(values.totalKM, 'totalKM');
-    validateNumber(values.tripKM, 'tripKM');
-    validateNumber(values.liters, 'liters');
-    validateNumber(values.cost, 'cost');
+  function openDeleteRefuelPrompt(e: CustomEvent<Refuel>) {
+    deletingRefuel = e.detail;
+    showDeletingRefuelPrompt = true;
+  }
 
-    const allValid = Object.values(shownErrors).reduce((a, b) => !a && !b);
+  function closeDeleteRefuelPrompt() {
+    deletingRefuel = {} as Refuel;
+    showDeletingRefuelPrompt = false;
+  }
 
-    if (allValid) {
-      const ok = await addRefuel({
-        vehicleId: selectedVehicle.id,
-        totalKM: Number(values.totalKM),
-        tripKM: Number(values.tripKM),
-        liters: Number(values.liters),
-        cost: Number(values.cost),
-        currency: values.currency,
-      } as Refuel);
-
-      if (ok) {
-        updateRefuels();
-        values = {};
-      }
-    }
+  async function onDeleteRefuel() {
+    await deleteRefuel(deletingRefuel);
+    await updateRefuels();
+    showDeletingRefuelPrompt = false;
   }
 </script>
 
@@ -97,29 +87,9 @@
   <Vehicle bind:selectedVehicle={selectedVehicle} vehicles={vehicleList} />
 </Section>
 
-<Section>
-  <h1>Refuels</h1>
-  {#if loading}
-    <Spinner />
-  {:else if !loading && !refuels?.length}
-    No refuels found
-  {:else}
-    <RefuelList {refuels} />
-  {/if}
-</Section>
-    
-<Section>
-  <button class="opener" on:click={() => addRefuelIsOpen = !addRefuelIsOpen}>
-    <h1>Add a new refuel</h1>
-    {#if addRefuelIsOpen}
-      <icon class="material-symbols-outlined">keyboard_arrow_up</icon>
-    {:else}
-      <icon class="material-symbols-outlined">keyboard_arrow_down</icon>
-    {/if}
-  </button>
-  {#if addRefuelIsOpen}
-    <hr>
-    <small>Note: only two digits after point is allowed. e.g. 155.25.</small>
+{#if addRefuelIsOpen}
+  <Section>
+    <small>Note: only numbers allowed. e.g. 155.25.</small>
     <form on:submit|preventDefault={handleAddRefuel} action="POST">
       <label>
         Vehicle
@@ -136,26 +106,26 @@
 
       <label>
         Total vehicle KM
-        <input on:change={() => validateNumber(values.totalKM, 'totalKM')} bind:value={values.totalKM} placeholder="Vehicle's kilometers" class={shownErrors.totalKM ? 'invalid' : ''} type="text">
-        <span hidden={!shownErrors.totalKM} class="error">Invalid total distance</span>
+        <input bind:value={values.total_km} placeholder="Vehicle's kilometers" type="text" required pattern="([0-9]*[.])?[0-9]+">
+        <span class="error">Must be a number</span>
       </label>
 
       <label>
         Trip KM
-        <input on:change={() => validateNumber(values.tripKM, 'tripKM')} bind:value={values.tripKM} placeholder="Trip distance" class={shownErrors.tripKM ? 'invalid' : ''} type="text">
-        <span hidden={!shownErrors.tripKM} class="error">Invalid trip distance</span>
+        <input bind:value={values.trip_km} placeholder="Trip distance" type="text" required pattern="([0-9]*[.])?[0-9]+">
+        <span class="error">Must be a number</span>
       </label>
 
       <label>
         Liters
-        <input on:change={() => validateNumber(values.liters, 'liters')} bind:value={values.liters} placeholder="Liters refueled" class={shownErrors.liters ? 'invalid' : ''} type="text">
-        <span hidden={!shownErrors.liters} class="error">Invalid liters fueled</span>
+        <input bind:value={values.liters} placeholder="Liters refueled" type="text" required pattern="([0-9]*[.])?[0-9]+">
+        <span class="error">Must be a number</span>
       </label>
 
       <label>
         Cost
-        <input on:change={() => validateNumber(values.cost, 'cost')} bind:value={values.cost} placeholder="Cost of refueling" class={shownErrors.cost ? 'invalid' : ''} type="text">
-        <span hidden={!shownErrors.cost} class="error">Invalid cost</span>
+        <input bind:value={values.cost} placeholder="Cost of refueling" type="text" required pattern="([0-9]*[.])?[0-9]+">
+        <span class="error">Must be a number</span>
       </label>
 
       <label>
@@ -167,22 +137,40 @@
         </select>
       </label>
 
-      <ButtonIcon icon="local_gas_station">Add Refuel</ButtonIcon>
+      <div class="submit-container">
+        <button class="btn btn-primary" type="submit">
+          <span class="material-symbols-outlined">local_gas_station</span>
+          Add refuel
+        </button>
+        <button class="btn btn-danger" on:click={() => addRefuelIsOpen = false}>Cancel</button>
+      </div>
     </form>
-  {/if}
-</Section>
+  </Section>
+{:else}
+  <Section>
+    <div class="refuels-header">
+      <h1>Refuels</h1>
+      <button class="btn btn-primary" on:click={() => addRefuelIsOpen = true}>
+        <span class="material-symbols-outlined">add</span>
+        Add refuel
+      </button>
+    </div>
+    {#if loading}
+      <Spinner />
+    {:else if !loading && !refuels?.length}
+      No refuels found
+    {:else}
+      <RefuelList {refuels} on:delete={(e) => openDeleteRefuelPrompt(e)} />
+    {/if}
+  </Section>
+{/if}
+
+
+{#if showDeletingRefuelPrompt}
+  <ConfirmationPrompt message="Are you sure you want to delete this refuel?" on:yes={onDeleteRefuel} on:no={closeDeleteRefuelPrompt} />
+{/if}
 
 <style>
-  .opener {
-    background-color: unset;
-    border: unset;
-    text-align: left;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
   form {
     display: flex;
     flex-direction: column;
@@ -193,25 +181,38 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin-bottom: 1.25rem;
+
+    & span {
+      display: none;
+    }
+  }
+
+  .refuels-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .submit-container {
+    display: flex;
+    gap: 0.5rem;
   }
 
   input, select {
     padding: 0.5rem 0.75rem;
-    margin-bottom: 1.25rem;
+  }
+
+  input:user-invalid {
+    border: 1px solid var(--red);
+  }
+
+  input:user-invalid + span {
+    display: block;
   }
 
   .error {
     font-size: 0.85rem;
     height: 1.25rem;
-  }
-
-  .invalid {
-    border-color: var(--error);
-    margin-bottom: 0;
-  }
-
-  .invalid:focus-visible {
-    outline-color: var(--error);
   }
 
   .skeleton {

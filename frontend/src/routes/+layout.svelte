@@ -10,6 +10,14 @@
       loadStoredUser();
       loaded = true;
     }
+
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((e) => {
+      console.log('cool', e)
+    });
+  } else {
+    console.log("Geolocation is not supported by this browser.");
+  }
   });
 </script>
 

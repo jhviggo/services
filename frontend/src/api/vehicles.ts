@@ -5,7 +5,7 @@ import { userStore } from './users';
 
 export interface IVehicle {
   id: string;
-  estimatedKML: number;
+  estimated_kml: number;
   model: string;
 }
 
@@ -13,12 +13,10 @@ export const vehicleStore = writable<IVehicle>();
 
 export async function listVehicles(): Promise<IVehicle[]> {
   const user = get(userStore);
-  console.log('weh', user);
   if (!user?.token) return [];
-  console.log('wah');
 
   try {
-    const response = await fetch(`${API_URL}/v1/users/${user.id}/vehicles`, {
+    const response = await fetch(`${API_URL}/users/${user.id}/vehicles`, {
       headers: {
         'Authorization': `Bearer ${user.token}`,
         'Content-Type': 'application/json',

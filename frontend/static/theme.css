@@ -1,12 +1,13 @@
 :root {
   font-family: 'Open Sans', sans-serif;
 
-  /* Colors */
+  /* colors */
   --primary-blue: #015fbf;
   --primary-blue-faint: rgba(1, 95, 191, 0.1);
   --gray: #6c757d;
   --green: #198754;
   --red: #dc3545;
+  --red-faint: rgba(220, 53, 69, 0.1);
   --yellow: #ffc107;
   --light-blue: #0dcaf0;
 
@@ -27,7 +28,11 @@ h1 {
   margin: 0;
 }
 
-/* Color classes */
+button:hover {
+  cursor: pointer;
+}
+
+/* color classes */
 .primary-blue {
   color: var(--primary-blue);
 }
@@ -44,4 +49,41 @@ h1 {
 
 .bold {
   font-weight: bold;
+}
+
+/* buttons */
+.btn {
+  background: unset;
+  border: 1px solid var(--primary-blue);
+  border-radius: 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: var(--primary-blue);
+  font-size: unset;
+}
+/* button types */
+.btn.btn-danger {
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+.btn.btn-danger:active {
+  background-color: var(--red-faint);
+}
+
+.btn.btn-primary {
+  border: 1px solid var(--primary-blue);
+}
+.btn.btn-primary:active {
+  background-color: var(--primary-blue-faint);
+}
+.btn.btn-primary:visited {
+  color: var(--primary-blue);
+}
+
+/* alignments */
+.justify-left {
+  justify-content: left;
 }
