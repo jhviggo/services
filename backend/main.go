@@ -12,6 +12,7 @@ import (
 	_ "github.com/glebarez/go-sqlite"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"github.com/google/uuid"
 )
 
@@ -35,6 +36,16 @@ func main() {
 		}
 		return http.HandlerFunc(fn)
 	})
+	r.Use(cors.Handler(cors.Options{
+		// AllowedOrigins:   []string{"https://foo.com"}, // Use this to allow specific origin hosts
+		AllowedOrigins: []string{"https://*", "http://*"},
+		// AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: false,
+		MaxAge:           300, // Maximum value not ignored by any of major browsers
+	}))
 
 	// Admin routes
 	r.Group(func(r chi.Router) {
@@ -82,7 +93,7 @@ func main() {
 			json.NewEncoder(w).Encode(models.DefaultResponse{Code: 200, Message: "OK"})
 		})
 		r.Post("/login", endpoints.Login)
-		r.Get("/viggodetours/refuels", endpoints.ListViggosdetourRefuels)
+		r.Get("/viggosdetour/refuels", endpoints.ListViggosdetourRefuels)
 
 		if os.Getenv("ENV") != "production" {
 			r.Post("/test-data", func(w http.ResponseWriter, r *http.Request) {
