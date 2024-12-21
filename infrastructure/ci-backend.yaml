@@ -29,7 +29,7 @@ spec:
               value: ${BRANCH}
             - name: JWT_SECRET
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: jwt-secret
                   key: value
           ports:
