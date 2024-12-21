@@ -29,11 +29,6 @@ spec:
               value: ${BRANCH}
             - name: PORT
               value: "8080"
-            - name: JWT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: jwt-secret
-                  key: jwtsecret
           ports:
             - containerPort: 1337
 
