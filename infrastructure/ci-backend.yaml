@@ -14,43 +14,28 @@ spec:
     spec:
       containers:
         - name: ${BRANCH}-service
-          image: ${CONTAINER_REPO}:${BRANCH}-${GITHUB_SHA}
+          image: ${CONTAINER_REPO}/${BRANCH}-${GITHUB_SHA}
           readinessProbe:
             httpGet:
               path: /health
-              port: 8080
+              port: 1337
             initialDelaySeconds: 15
             failureThreshold: 3
             periodSeconds: 10
           env:
-            - name: DATABASE_SOURCE
-              value: mysql
             - name: DATABASE_NAME
               value: main
-            - name: DATABASE_USERNAME
-              value: root
-            - name: OTEL_ENDPOINT
-              value: "jaeger.observability:4317"
-            - name: OTEL_SERVICE_NAME
-              value: refuel
             - name: BRANCH
               value: ${BRANCH}
             - name: PORT
               value: "8080"
-            - name: GIN_MODE
-              value: release
-            - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secret
-                  key: password
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
                   key: jwtsecret
           ports:
-            - containerPort: 8080
+            - containerPort: 1337
 
 ---
 
@@ -62,7 +47,7 @@ spec:
   type: ClusterIP
   ports:
     - port: 80
-      targetPort: 8080
+      targetPort: 1337
   selector:
     app: ${BRANCH}-service
 
