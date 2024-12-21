@@ -10,6 +10,7 @@ RUN go build -o ./godocker
 FROM alpine:latest
 WORKDIR /app
 COPY --from=build /app/godocker .
+RUN apk --no-cache add sqlite
 
-EXPOSE 8080
+EXPOSE 1337
 CMD [ "./godocker" ]

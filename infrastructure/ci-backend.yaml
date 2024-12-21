@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ${BRANCH}-service
+  name: ${BRANCH}-backend
 spec:
   selector:
     matchLabels:
-      app: ${BRANCH}-service
+      app: ${BRANCH}-backend
   replicas: 1
   template:
     metadata:
       labels:
-        app: ${BRANCH}-service
+        app: ${BRANCH}-backend
     spec:
       containers:
-        - name: ${BRANCH}-service
+        - name: ${BRANCH}-backend
           image: ${CONTAINER_REPO}:backend-${BRANCH}-${GITHUB_SHA}
           readinessProbe:
             httpGet:
@@ -24,11 +24,14 @@ spec:
             periodSeconds: 10
           env:
             - name: DATABASE_NAME
-              value: main
+              value: ${BRANCH}
             - name: BRANCH
               value: ${BRANCH}
-            - name: PORT
-              value: "8080"
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: jwt-secret
+                  key: value
           ports:
             - containerPort: 1337
 
@@ -37,34 +40,34 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ${BRANCH}-service
+  name: ${BRANCH}-backend
 spec:
   type: ClusterIP
   ports:
     - port: 80
       targetPort: 1337
   selector:
-    app: ${BRANCH}-service
+    app: ${BRANCH}-backend
 
 ---
 
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: ${BRANCH}-service
+  name: ${BRANCH}-backend
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
 spec:
   ingressClassName: nginx
   rules:
-  - host: ${BRANCH}-service.api.viggo.work
+  - host: ${BRANCH}-backend.api.viggo.work
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ${BRANCH}-service
+            name: ${BRANCH}-backend
             port:
               number: 80
