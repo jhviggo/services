@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ${BRANCH}-service
-          image: ${CONTAINER_REPO}/${BRANCH}-${GITHUB_SHA}
+          image: ${CONTAINER_REPO}:backend-${BRANCH}-${GITHUB_SHA}
           readinessProbe:
             httpGet:
               path: /health
