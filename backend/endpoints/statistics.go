@@ -12,4 +12,9 @@ func GetRefuelFrequencyForPeriod(w http.ResponseWriter, r *http.Request) {
 	span := r.URL.Query().Get("span")
 
 	fmt.Println("statistics" + from + to + span)
+
+	/*
+	sqlite> select strftime('%W', created_at), trip_km from refuels;
+	sqlite> select strftime('%W', created_at), SUM(trip_km) from refuels group by strftime('%W', created_at);
+	*/
 }
