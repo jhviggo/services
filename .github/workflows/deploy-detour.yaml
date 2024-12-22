@@ -9,7 +9,7 @@ on:
 env:
   CONTAINER_REPO: registry.digitalocean.com/viggosdetour-production/services
   SRC: ./detour
-  INFRA: ./infrastructure
+  INFRA: ./infrastructure/detour
 
 jobs:
   push-image:
@@ -28,7 +28,7 @@ jobs:
         env:
           DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:detour-${{ env.BRANCH }}-${{ env.GITHUB_SHA_HASH }}
         run: |
-          mv ${{ env.INFRA }}/detour/* ${{ env.SRC }}/
+          mv ${{ env.INFRA }}/* ${{ env.SRC }}/
           docker build -t $DOCKER_IMAGE ${{ env.SRC }}
           docker login registry.digitalocean.com -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push $DOCKER_IMAGE
@@ -55,7 +55,7 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" >> $HOME/.kube/config
       
       - name: Deploy kubernetes definitions
-        working-directory: ${{ env.INFRA }}/detour
+        working-directory: ${{ env.INFRA }}
         env:
           BRANCH: ${{ env.BRANCH }}
           CONTAINER_REPO: ${{ env.CONTAINER_REPO }}
