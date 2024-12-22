@@ -19,9 +19,9 @@ spec:
             httpGet:
               path: /health
               port: 1337
-            initialDelaySeconds: 15
+            initialDelaySeconds: 20
             failureThreshold: 3
-            periodSeconds: 10
+            periodSeconds: 20
           env:
             - name: DATABASE_NAME
               value: ${BRANCH}
