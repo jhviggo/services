@@ -36,7 +36,7 @@
   <div class="backdrop" aria-hidden="true" on:click={toggleMenu}></div>
   <div class="menu">
     <div class="header">
-      <span class="bold">{ $userStore.name || 'Menu' }</span>
+      <span class="bold">{ $userStore?.name || 'Menu' }</span>
       <button class="burger" on:click={toggleMenu}>
         <icon class="material-symbols-outlined">
           close

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ${BRANCH}-frontend
+  name: ${BRANCH}-refuel-frontend
 spec:
   selector:
     matchLabels:
-      app: ${BRANCH}-frontend
+      app: ${BRANCH}-refuel-frontend
   replicas: 1
   template:
     metadata:
       labels:
-        app: ${BRANCH}-frontend
+        app: ${BRANCH}-refuel-frontend
     spec:
       containers:
-        - name: ${BRANCH}-frontend
-          image: ${CONTAINER_REPO}:frontend-${BRANCH}-${GITHUB_SHA}
+        - name: ${BRANCH}-refuel-frontend
+          image: ${CONTAINER_REPO}:refuel-frontend-${BRANCH}-${GITHUB_SHA}
           readinessProbe:
             httpGet:
               path: /
@@ -29,34 +29,34 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ${BRANCH}-frontend
+  name: ${BRANCH}-refuel-frontend
 spec:
   type: ClusterIP
   ports:
     - port: 80
       targetPort: 8080
   selector:
-    app: ${BRANCH}-frontend
+    app: ${BRANCH}-refuel-frontend
 
 ---
 
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: ${BRANCH}-frontend
+  name: ${BRANCH}-refuel-frontend
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
 spec:
   ingressClassName: nginx
   rules:
-  - host: ${BRANCH}-frontend.api.viggo.work
+  - host: ${BRANCH}-refuel-frontend.api.viggo.work
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ${BRANCH}-frontend
+            name: ${BRANCH}-refuel-frontend
             port:
               number: 80

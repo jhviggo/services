@@ -2,13 +2,12 @@ name: Deploying frontend
 on:
   push:
     paths:
-      - 'never'
-      #- 'frontend/**'
-      #- 'infrastructure/**'
-      #- '.github/workflows/deploy-frontend.yaml'
+      - 'frontend/**'
+      - 'infrastructure/refuel-frontend/**'
+      - '.github/workflows/deploy-frontend.yaml'
 
 env:
-  CONTAINER_REPO: aaitho/services
+  CONTAINER_REPO: registry.digitalocean.com/viggosdetour-production/services
   SRC: ./frontend
   INFRA: ./infrastructure
 
@@ -27,11 +26,11 @@ jobs:
 
       - name: Build Docker image
         env:
-          DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:frontend-${{ env.BRANCH }}-${{ env.GITHUB_SHA_HASH  }}
+          DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:refuel-frontend-${{ env.BRANCH }}-${{ env.GITHUB_SHA_HASH }}
         run: |
-          mv ${{ env.INFRA }}/DockerfileFrontend ${{ env.SRC }}/Dockerfile
+          mv ${{ env.INFRA }}/refuel-frontend/* ${{ env.SRC }}/
           docker build -t $DOCKER_IMAGE ${{ env.SRC }}
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker login registry.digitalocean.com -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push $DOCKER_IMAGE
 
   k3s-deploy:
