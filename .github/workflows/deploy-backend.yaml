@@ -1,4 +1,4 @@
-name: Deploying backend
+name: Deploying Backend
 on:
   push:
     paths:
@@ -61,7 +61,7 @@ jobs:
           CONTAINER_REPO: ${{ env.CONTAINER_REPO }}
           GITHUB_SHA: ${{ env.GITHUB_SHA_HASH }}
         run: |
-          envsubst < ci-backend.yaml > def.yaml
+          envsubst < deploy-backend.yaml > def.yaml
           kubectl apply -f def.yaml
       
       - name: Wait for service to be ready
