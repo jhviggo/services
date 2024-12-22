@@ -33,7 +33,7 @@ jobs:
           docker login registry.digitalocean.com -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push $DOCKER_IMAGE
 
-  k3s-deploy:
+  kubernetes-deploy:
     name: Deploy service to K3S
     needs: push-image
     runs-on: ubuntu-latest
@@ -55,18 +55,18 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" >> $HOME/.kube/config
       
       - name: Deploy kubernetes definitions
-        working-directory: ${{ env.INFRA }}
+        working-directory: ${{ env.INFRA }}/refuel-frontend
         env:
           BRANCH: ${{ env.BRANCH }}
           CONTAINER_REPO: ${{ env.CONTAINER_REPO }}
           GITHUB_SHA: ${{ env.GITHUB_SHA_HASH }}
         run: |
-          envsubst < ci-frontend.yaml > def.yaml
+          envsubst < deploy-refuel-frontend.yaml > def.yaml
           kubectl apply -f def.yaml
       
       - name: Wait for service to be ready
         run: |
-          kubectl rollout status deployment/${{ env.BRANCH }}-frontend --timeout=30s
+          kubectl rollout status deployment/${{ env.BRANCH }}-refuel-frontend --timeout=30s
           
       
       
