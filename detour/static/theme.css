@@ -1,0 +1,60 @@
+:root {
+  /* Colors */
+  --background: #ECECEC;
+  --white: white;
+  --black: black;
+  --orange: #ff8225;
+  --orange-transparent: rgba(255, 130, 37, 0.5);
+  --red: #B43F3F;
+  --blue: #173B45;
+  --off-blue: #18272b;
+  --green: #387F39;
+
+  /* breakpoints */
+  --small: 576px;
+  --medium: 768px;
+  --large: 992px;
+
+  /* sizes */
+  --timeline-width: 10rem;
+  --header-height: 4rem;
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+  color: black;
+}
+
+body {
+  margin: 0;
+  height: 100dvh;
+  background-color: var(--background);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  max-width: 75rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* colors */
+.orange {
+  color: var(--orange);
+}
+.blue {
+  color: var(--blue);
+}
+.white {
+  color: white;
+}
+
+/* animation */
+@keyframes wiggle {
+  0% { transform: scale(1); }
+  80% { transform: scale(1); }
+  85% { transform: scale(1.05); }
+  95% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}

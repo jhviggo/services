@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "itemId": "t1",
+    "date": "2024-08-03",
+    "location": "Denmark",
+    "city": "Aarhus",
+    "image": "/images/map.webp",
+    "content": "timeline-map.md"
+  },
+  {
+    "id": 2,
+    "itemId": "t2",
+    "date": "2024-08-06",
+    "location": "Germany",
+    "city": "Munich",
+    "image": "/images/carnet.webp",
+    "content": "timeline-carnet.md"
+  }
+]

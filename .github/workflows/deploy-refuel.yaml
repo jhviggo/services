@@ -1,0 +1,72 @@
+name: Deploying Refuel Frontend
+on:
+  push:
+    paths:
+      - 'refuel/**'
+      - 'infrastructure/refuel/**'
+      - '.github/workflows/deploy-refuel.yaml'
+
+env:
+  CONTAINER_REPO: registry.digitalocean.com/viggosdetour-production/services
+  SRC: ./refuel
+  INFRA: ./infrastructure
+
+jobs:
+  push-image:
+    name: Build docker image and push to repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Lowercase branch name
+        uses: ./.github/actions/env/
+        with:
+          branch: ${{ github.head_ref || github.ref_name }}
+
+      - name: Build Docker image
+        env:
+          DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:refuel-${{ env.BRANCH }}-${{ env.GITHUB_SHA_HASH }}
+        run: |
+          mv ${{ env.INFRA }}/refuel/* ${{ env.SRC }}/
+          docker build -t $DOCKER_IMAGE ${{ env.SRC }}
+          docker login registry.digitalocean.com -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push $DOCKER_IMAGE
+
+  kubernetes-deploy:
+    name: Deploy service to K3S
+    needs: push-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Lowercase branch name
+        uses: ./.github/actions/env/
+        with:
+          branch: ${{ github.head_ref || github.ref_name }}
+
+      - uses: azure/setup-kubectl@v3
+        id: install
+
+      - name: Configure kubectl
+        run: |
+          mkdir $HOME/.kube/
+          echo "${{ secrets.KUBE_CONFIG }}" >> $HOME/.kube/config
+      
+      - name: Deploy kubernetes definitions
+        working-directory: ${{ env.INFRA }}/refuel
+        env:
+          BRANCH: ${{ env.BRANCH }}
+          CONTAINER_REPO: ${{ env.CONTAINER_REPO }}
+          GITHUB_SHA: ${{ env.GITHUB_SHA_HASH }}
+        run: |
+          envsubst < deploy-refuel.yaml > def.yaml
+          kubectl apply -f def.yaml
+      
+      - name: Wait for service to be ready
+        run: |
+          kubectl rollout status deployment/${{ env.BRANCH }}-refuel --timeout=30s
+          
+      
+      

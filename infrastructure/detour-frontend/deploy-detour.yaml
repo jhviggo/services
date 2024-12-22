@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ${BRANCH}-refuel-frontend
+  name: ${BRANCH}-detour
 spec:
   selector:
     matchLabels:
-      app: ${BRANCH}-refuel-frontend
+      app: ${BRANCH}-detour
   replicas: 1
   template:
     metadata:
       labels:
-        app: ${BRANCH}-refuel-frontend
+        app: ${BRANCH}-detour
     spec:
       containers:
-        - name: ${BRANCH}-refuel-frontend
-          image: ${CONTAINER_REPO}:refuel-frontend-${BRANCH}-${GITHUB_SHA}
+        - name: ${BRANCH}-detour
+          image: ${CONTAINER_REPO}:detour-${BRANCH}-${GITHUB_SHA}
           readinessProbe:
             httpGet:
               path: /
@@ -29,34 +29,34 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ${BRANCH}-refuel-frontend
+  name: ${BRANCH}-detour
 spec:
   type: ClusterIP
   ports:
     - port: 80
       targetPort: 8080
   selector:
-    app: ${BRANCH}-refuel-frontend
+    app: ${BRANCH}-detour
 
 ---
 
 kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: ${BRANCH}-refuel-frontend
+  name: ${BRANCH}-detour
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
 spec:
   ingressClassName: nginx
   rules:
-  - host: ${BRANCH}-refuel-frontend.api.viggo.work
+  - host: ${BRANCH}-detour.api.viggo.work
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ${BRANCH}-refuel-frontend
+            name: ${BRANCH}-detour
             port:
               number: 80
