@@ -14,7 +14,10 @@ func GetRefuelFrequencyForPeriod(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("statistics" + from + to + span)
 
 	/*
-	sqlite> select strftime('%W', created_at), trip_km from refuels;
-	sqlite> select strftime('%W', created_at), SUM(trip_km) from refuels group by strftime('%W', created_at);
+	sqlite> select strftime('%W', created_at) AS week, SUM(trip_km) from refuels group by week ORDER BY week ASC;
 	*/
+}
+
+func TrackFirstVisit(w http.ResponseWriter, r *http.Request) {
+
 }

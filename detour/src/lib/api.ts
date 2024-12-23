@@ -18,6 +18,8 @@ export interface Timeline {
   content: string;
 }
 
+const SERVICES_API_URL = '';
+
 export async function getTimelines(): Promise<Timeline[]> {
   try {
     const res = await fetch('/timeline.json')
@@ -42,4 +44,17 @@ export async function getContentFile(fileName: string): Promise<string> {
     });
   }
   return '';
+}
+
+export async function registerVisitor(visitorId: string) {
+  try {
+    const res = await fetch(`${SERVICES_API_URL}/register-visitor`, {
+      method: 'POST',
+      body: JSON.stringify({
+        visitor: visitorId,
+      }),
+    });
+  } catch (e) {
+    console.warn('failed to register visitor');
+  }
 }

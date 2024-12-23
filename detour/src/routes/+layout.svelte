@@ -1,12 +1,11 @@
 <svelte:head>
-  {#if $cookiesStore.status === COOKIE_ACCEPTED}
+  {#if import.meta.env.VITE_ENVIRONMENT !== 'dev'}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1JXNZFG1DP"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-1JXNZFG1DP');
     </script>
   {/if}
@@ -41,23 +40,24 @@
   <Footer />
 </div>
 
-{#if $cookiesStore.status === COOKIE_UNKNOWN && hasLoadedCookies}
-  <Cookie />
-{/if}
-
 <script lang="ts">
   import Header from '$components/Header.svelte';
   import Footer from '$components/Footer.svelte';
-  import Cookie from '$components/Cookie.svelte';
-  import { checkCookie, cookiesStore, COOKIE_ACCEPTED, COOKIE_UNKNOWN } from '$lib/cookies';
   import { onMount } from 'svelte';
-
-  let hasLoadedCookies: boolean = false;
+  import { getVisitorCookie, setVisitorCookie } from '$lib/cookies';
+  import { registerVisitor } from '$lib/api';
+  import { v4 as uuidv4 } from 'uuid';
 
   onMount(() => {
-    checkCookie();
-    hasLoadedCookies = true;
-  })
+    setTimeout(() => {
+      const visitorId = getVisitorCookie();
+      if (visitorId == '') {
+        const newVisitorId = uuidv4();
+        setVisitorCookie(newVisitorId);
+        registerVisitor(newVisitorId);
+      }
+    }, 1000);
+  });
 </script>
 
 <style>
