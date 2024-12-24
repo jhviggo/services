@@ -53,7 +53,7 @@ spec:
   tls:
     - hosts:
       - ${BRANCH}-refuel.services.viggosdetour.com
-      secretName: echo-tls
+      secretName: ${BRANCH}-refuel-tls
   ingressClassName: nginx
   rules:
   - host: ${BRANCH}-refuel.services.viggosdetour.com

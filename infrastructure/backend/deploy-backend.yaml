@@ -63,7 +63,7 @@ spec:
   tls:
     - hosts:
       - ${BRANCH}-backend.services.viggosdetour.com
-      secretName: echo-tls
+      secretName: ${BRANCH}-backend-tls
   ingressClassName: nginx
   rules:
   - host: ${BRANCH}-backend.services.viggosdetour.com

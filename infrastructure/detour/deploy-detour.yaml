@@ -52,7 +52,7 @@ spec:
   tls:
     - hosts:
       - ${BRANCH}-detour.services.viggosdetour.com
-      secretName: echo-tls
+      secretName: ${BRANCH}-detour-tls
   ingressClassName: nginx
   rules:
   - host: ${BRANCH}-detour.services.viggosdetour.com
