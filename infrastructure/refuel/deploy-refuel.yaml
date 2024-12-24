@@ -46,9 +46,14 @@ apiVersion: networking.k8s.io/v1
 metadata:
   name: ${BRANCH}-refuel
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true "
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
 spec:
+  tls:
+    - hosts:
+      - ${BRANCH}-refuel.services.viggosdetour.com
+      secretName: echo-tls
   ingressClassName: nginx
   rules:
   - host: ${BRANCH}-refuel.services.viggosdetour.com
