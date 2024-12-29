@@ -57,12 +57,17 @@ apiVersion: networking.k8s.io/v1
 metadata:
   name: ${BRANCH}-backend
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
+  tls:
+    - hosts:
+      - ${BRANCH}-backend.services.viggosdetour.com
+      secretName: ${BRANCH}-backend-tls
   ingressClassName: nginx
   rules:
-  - host: ${BRANCH}-backend.api.viggo.work
+  - host: ${BRANCH}-backend.services.viggosdetour.com
     http:
       paths:
       - path: /
