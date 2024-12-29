@@ -8,6 +8,7 @@ import (
 	"services/project/endpoints"
 	"services/project/lib"
 	"services/project/models"
+	"time"
 
 	_ "github.com/glebarez/go-sqlite"
 	"github.com/go-chi/chi/v5"
@@ -78,6 +79,9 @@ func main() {
 		r.Post("/users/{userId}/vehicles/{vehicleId}/refuels", endpoints.AddRefuel)
 		r.Delete("/users/{userId}/vehicles/{vehicleId}/refuels/{refuelId}", endpoints.DeleteRefuel)
 		r.Patch("/users/{userId}/vehicles/{vehicleId}/refuels/{refuelId}", endpoints.UpdateRefuel)
+
+		// statistics
+		r.Get("/statistics/{userId}", endpoints.GetRefuelFrequencyForPeriod)
 	})
 
 	// Public routes
@@ -102,6 +106,7 @@ func main() {
 					w.WriteHeader(http.StatusInternalServerError)
 					json.NewEncoder(w).Encode(models.DefaultResponse{Code: 500, Message: "Unable to insert test data"})
 					fmt.Println(err)
+					return
 				}
 				json.NewEncoder(w).Encode(models.DefaultResponse{Code: 200, Message: "Test data added"})
 			})
@@ -154,6 +159,7 @@ func InsertTestData() error {
 		Cost:        300,
 		Currency:    "DKK",
 		Coordinates: "56.15660,10.20427",
+		FuelDate:    time.Date(2024, 11, 6, 10, 0, 0, 0, time.UTC),
 	}
 	testRefuel1.ID = uuid.New()
 	result = db.Create(&testRefuel1)
@@ -169,6 +175,7 @@ func InsertTestData() error {
 		Cost:        20,
 		Currency:    "EUR",
 		Coordinates: "55.1418,9.4876",
+		FuelDate:    time.Date(2024, 11, 14, 10, 0, 0, 0, time.UTC),
 	}
 	testRefuel2.ID = uuid.New()
 	result = db.Create(&testRefuel2)
@@ -184,9 +191,26 @@ func InsertTestData() error {
 		Cost:        250,
 		Currency:    "DKK",
 		Coordinates: "49.539,11.633",
+		FuelDate:    time.Date(2024, 12, 4, 10, 0, 0, 0, time.UTC),
 	}
 	testRefuel3.ID = uuid.New()
 	result = db.Create(&testRefuel3)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	testRefuel4 := models.Refuel{
+		VehicleId:   testVehicle.ID,
+		TotalKM:     30300,
+		TripKM:      260,
+		Liters:      10,
+		Cost:        200,
+		Currency:    "DKK",
+		Coordinates: "49.539,11.633",
+		FuelDate:    time.Date(2024, 12, 5, 10, 0, 0, 0, time.UTC),
+	}
+	testRefuel4.ID = uuid.New()
+	result = db.Create(&testRefuel4)
 	if result.Error != nil {
 		return result.Error
 	}

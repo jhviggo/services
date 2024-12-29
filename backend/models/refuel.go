@@ -1,6 +1,10 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type Refuel struct {
 	DefaultModel
@@ -11,4 +15,5 @@ type Refuel struct {
 	Cost        float32   `json:"cost,omitempty"`
 	Currency    string    `json:"currency,omitempty"`
 	Coordinates string    `json:"coordinates"`
+	FuelDate    time.Time `json:"fuel_date"`
 }

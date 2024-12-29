@@ -23,7 +23,7 @@
 <header>
   <a class="logo" href="/">
     <img src="/logo.png" alt="page logo"/>
-    [services]
+    [Refuel]
   </a>
   <button class="burger" on:click={toggleMenu}>
     <icon class="material-symbols-outlined">
