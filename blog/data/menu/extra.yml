@@ -1,0 +1,20 @@
+---
+header:
+  - name: World Map
+    icon: gblog_star
+    ref: "/world-map"
+  - name: Meet the Bike
+    icon: gblog_star
+    ref: "/meet-the-bike"
+
+footer:
+  - name: About
+    ref: "/about"
+  - name: YouTube
+    external: true
+    icon: youtube
+    ref: "https://www.youtube.com/@ViggosDetour"
+  - name: Instagram
+    external: true
+    icon: instagram
+    ref: "https://www.instagram.com/viggosdetour"

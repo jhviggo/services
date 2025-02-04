@@ -1,0 +1,21 @@
+<figure class="gblog-post__figure">
+  <a class="gblog-markdown__link--raw" href="/images/{{ $.Get "src" }}">
+    <picture>
+      {{ $var := $.Get "srcset" }}
+      {{ if eq $var false }}
+        <img
+          src="/images/{{ $.Get "src" }}"
+          alt="{{ $.Get "alt" }}"
+          sizes="100vw">
+      {{ else }}
+        <img
+          src="/images/{{ $.Get "src" }}"
+          alt="{{ $.Get "alt" }}"
+          srcset="/images/small-{{ $.Get "src" }} 600w, /images/large-{{ $.Get "src" }} 1200w"
+          onerror="this.srcset=this.src;this.onerror=null"
+          sizes="100vw">
+      {{ end }}
+    </picture>
+  </a>
+  <figcaption>{{ $.Get "caption" | $.Page.RenderString }}</figcaption>
+</figure>
