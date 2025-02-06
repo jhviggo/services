@@ -1,0 +1,270 @@
+- hoverText: 'Aarhus, Denmark'
+  clickable: true
+  link: /posts/planning/route/
+  coords:
+    - 56.156
+    - 10.184
+- hoverText: 'Hanover, Germany'
+  coords:
+    - 52.376
+    - 9.75
+- hoverText: 'Munich, Germany'
+  coords:
+    - 48.129
+    - 11.578
+- hoverText: 'Milan, Italy'
+  coords:
+    - 45.464
+    - 9.189
+- hoverText: 'Bologna, Italy'
+  coords:
+    - 44.493
+    - 11.342
+- hoverText: 'Venice, Italy'
+  coords:
+    - 45.436
+    - 12.333
+- hoverText: 'Ljubljana, Slovenia'
+  coords:
+    - 46.049
+    - 14.507
+- hoverText: 'Graz, Austria'
+  coords:
+    - 47.06644
+    - 15.43154
+- hoverText: 'Budapest, Hungary'
+  coords:
+    - 47.4898
+    - 19.0402
+- hoverText: 'Virovitica, Croatia'
+  coords:
+    - 45.79
+    - 17.375
+- hoverText: 'Zagreb, Croatia'
+  coords:
+    - 45.81136
+    - 15.97748
+- hoverText: 'Zadar, Croatia'
+  coords:
+    - 44.11722
+    - 15.24279
+- hoverText: 'Split, Croatia'
+  coords:
+    - 43.51152
+    - 16.43997
+- hoverText: 'Mostar, Bosnia'
+  coords:
+    - 43.34334
+    - 17.80777
+- hoverText: 'Sarajevo, Bosnia'
+  coords:
+    - 43.85262
+    - 18.3853
+- hoverText: 'Belgrade, Serbia'
+  coords:
+    - 44.8146
+    - 20.46023
+- hoverText: 'Craiova, Romania'
+  coords:
+    - 44.31821
+    - 23.79601
+- hoverText: 'Bucharest, Romania'
+  coords:
+    - 44.43525
+    - 26.10263
+- hoverText: 'Varna, Bulgaria'
+  coords:
+    - 43.20674
+    - 27.91607
+- hoverText: 'Sofia, Bulgaria'
+  coords:
+    - 42.69708
+    - 23.32172
+- hoverText: 'Skopje, Macedonia'
+  coords:
+    - 41.99583
+    - 21.43149
+- hoverText: 'Tirana, Albania'
+  coords:
+    - 41.32772
+    - 19.81914
+- hoverText: 'Thessaloniki, Greece'
+  coords:
+    - 40.6385
+    - 22.9379
+- hoverText: 'Alexandroupoli, Greece'
+  coords:
+    - 40.84739
+    - 25.87503
+- hoverText: 'Istanbul, Türkiye'
+  coords:
+    - 41.0416
+    - 28.9795
+- hoverText: 'Ankara, Türkiye'
+  coords:
+    - 39.9198
+    - 32.8535
+- hoverText: 'Kayseri, Türkiye'
+  coords:
+    - 38.72195
+    - 35.48711
+- hoverText: 'Erzincan, Türkiye'
+  coords:
+    - 39.74666
+    - 39.49111
+- hoverText: 'Rize, Türkiye'
+  coords:
+    - 41.02447
+    - 40.51962
+- hoverText: 'Kutaisi, Georgia'
+  coords:
+    - 42.26994
+    - 42.70513
+- hoverText: 'Tbilisi, Georgia'
+  coords:
+    - 41.69772
+    - 44.79983
+- hoverText: 'Yerevan, Armenia'
+  coords:
+    - 40.17481
+    - 44.51434
+- hoverText: 'Ganja, Azerbaijan'
+  coords:
+    - 40.68051
+    - 46.35929
+- hoverText: 'Baku, Azerbaijan'
+  coords:
+    - 40.37376
+    - 49.8331
+- hoverText: 'Bilasuvar, Azerbaijan'
+  coords:
+    - 39.45535
+    - 48.54599
+- hoverText: 'Tabriz, Iran'
+  coords:
+    - 38.07405
+    - 46.29637
+- hoverText: 'Zanjan, Iran'
+  coords:
+    - 36.67937
+    - 48.49759
+- hoverText: 'Tehran, Iran'
+  coords:
+    - 35.6885
+    - 51.3895
+- hoverText: 'Kashan, Iran'
+  coords:
+    - 33.98707
+    - 51.44328
+- hoverText: 'Isfahan, Iran'
+  coords:
+    - 32.6695
+    - 51.6645
+- hoverText: 'Rafsanjan, Iran'
+  coords:
+    - 30.40072
+    - 55.99368
+- hoverText: 'Bam, Iran'
+  coords:
+    - 29.10639
+    - 58.35761
+- hoverText: 'Zahedan, Iran'
+  coords:
+    - 29.49792
+    - 60.84419
+- hoverText: 'Dalbandin, Pakistan'
+  coords:
+    - 28.89639
+    - 64.40955
+- hoverText: 'Quetta, Pakistan'
+  coords:
+    - 30.1956
+    - 67.0176
+- hoverText: 'Sukkur, Pakistan'
+  coords:
+    - 27.6988
+    - 68.856
+- hoverText: 'Rahim Yar Khan, Pakistan'
+  coords:
+    - 28.4186
+    - 70.3048
+- hoverText: 'Multan, Pakistan'
+  coords:
+    - 30.195
+    - 71.4721
+- hoverText: 'Lahore, Pakistan'
+  coords:
+    - 31.5622
+    - 74.3169
+- hoverText: 'Ludhiana, India'
+  coords:
+    - 30.90768
+    - 75.85164
+- hoverText: 'New Delhi, India'
+  coords:
+    - 28.615
+    - 77.2091
+- hoverText: 'Lucknow, India'
+  coords:
+    - 26.8382
+    - 80.9334
+- hoverText: 'Gorakhpur, India'
+  coords:
+    - 26.7604
+    - 83.3683
+- hoverText: 'Pokhara, Nepal'
+  coords:
+    - 28.2076
+    - 83.9914
+- hoverText: 'Kathmandu, Nepal'
+  coords:
+    - 27.7073
+    - 85.3204
+- hoverText: 'Motihari, India'
+  coords:
+    - 26.65045
+    - 84.91151
+- hoverText: 'Gaya, India'
+  coords:
+    - 24.7967
+    - 85.008
+- hoverText: 'Medininagar, India'
+  coords:
+    - 24.0418
+    - 84.0697
+- hoverText: 'Ambikapur, India'
+  coords:
+    - 23.12197
+    - 83.1979
+- hoverText: 'Bilaspur, India'
+  coords:
+    - 22.08055
+    - 82.14057
+- hoverText: 'Rajnandgaon, India'
+  coords:
+    - 21.09588
+    - 81.02946
+- hoverText: 'Nagpur, India'
+  coords:
+    - 21.1502
+    - 79.0819
+- hoverText: 'Adilabad, India'
+  coords:
+    - 19.67589
+    - 78.53421
+- hoverText: 'Hyderabad, India'
+  coords:
+    - 17.36056
+    - 78.47412
+- hoverText: 'Vijayawada, India'
+  coords:
+    - 16.50902
+    - 80.61868
+- hoverText: 'Nellore, India'
+  coords:
+    - 14.44931
+    - 79.98741
+- hoverText: 'Chennai, India'
+  coords:
+    - 13.08207
+    - 80.28172
