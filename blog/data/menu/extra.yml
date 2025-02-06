@@ -3,9 +3,9 @@ header:
   - name: World Map
     icon: gblog_star
     ref: "/world-map"
-  - name: Meet the Bike
+  - name: Me and my bike
     icon: gblog_star
-    ref: "/meet-the-bike"
+    ref: "/viggo-and-the-motorcycle"
 
 footer:
   - name: About
