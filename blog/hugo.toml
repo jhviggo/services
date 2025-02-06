@@ -1,4 +1,4 @@
-baseURL = "http://localhost"
+baseURL = "https://viggosdetour.com"
 title = "Viggo's Detour Blog"
 theme = "hugo-geekblog"
 
@@ -42,3 +42,9 @@ disablePathToLower = true
   section = ["HTML"]
   taxonomy = ["HTML"]
   term = ["HTML", "ATOM"]
+
+[params]
+  description = "Motorcycle trip from Denmark To Japan to begin my studies"
+  subtitle = "Blog about my trip to Japan starting my Master's degree in Software Engineering"
+  keywords = ["Travel", "Motorcycle", "Camping", "Software Engineer", "Viggo"]
+  images = ["/images/denmark-field-bike-shot.jpg"]
