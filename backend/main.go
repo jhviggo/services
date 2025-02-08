@@ -15,10 +15,18 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	"github.com/google/uuid"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	lib.ConnectToSQLite()
+	environment := os.Getenv("ENV")
+
+	if environment != "production" {
+		godotenv.Load()
+	}
+	dataPath := os.Getenv("DATA_PATH")
+
+	lib.ConnectToSQLite(dataPath)
 	err := lib.MigrateTables()
 	if err != nil {
 		panic("Unable to migrate")
@@ -99,7 +107,7 @@ func main() {
 		r.Post("/login", endpoints.Login)
 		r.Get("/viggosdetour/refuels", endpoints.ListViggosdetourRefuels)
 
-		if os.Getenv("ENV") != "production" {
+		if environment != "production" {
 			r.Post("/test-data", func(w http.ResponseWriter, r *http.Request) {
 				err := InsertTestData()
 				if err != nil {
@@ -113,7 +121,17 @@ func main() {
 		}
 	})
 
+	/* hidden admin routes for local connections */
+	hiddenRouter := chi.NewRouter()
+	hiddenRouter.Use(middleware.Logger)
+	hiddenRouter.Get("/users", endpoints.ListUsers)
+	hiddenRouter.Get("/users/{userId}", endpoints.GetUser)
+	hiddenRouter.Post("/users", endpoints.AddUser)
+	hiddenRouter.Delete("/users/{userId}", endpoints.DeleteUser)
+	hiddenRouter.Patch("/users/{userId}", endpoints.UpdateUser)
+
 	fmt.Println("Starting server...⚡")
+	go http.ListenAndServe(":1338", hiddenRouter)
 	err = http.ListenAndServe(":1337", r)
 	fmt.Println(err)
 }

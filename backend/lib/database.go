@@ -12,9 +12,9 @@ import (
 
 var db *gorm.DB
 
-func ConnectToSQLite() {
+func ConnectToSQLite(dataPath string) {
 	fmt.Println("Connecting to DB...💾")
-	sqlDB, err := sql.Open("sqlite", "./db.db")
+	sqlDB, err := sql.Open("sqlite", dataPath+"/db.db")
 
 	if err != nil {
 		panic("failed to connect database")
