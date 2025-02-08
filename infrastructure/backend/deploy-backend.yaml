@@ -8,16 +8,6 @@ spec:
       app: ${BRANCH}-backend
   replicas: 1
   revisionHistoryLimit: 2
-  volumeClaimTemplates:
-    - metadata:
-        name: pvc-data
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 50Gi
-        storageClassName: do-block-storage
   template:
     metadata:
       labels:
