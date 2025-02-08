@@ -27,7 +27,7 @@ jobs:
       - name: Set environment
         working-directory: refuel/
         run: |
-          echo "VITE_API_URL=${{ env.BRANCH }}-backend.services.viggosdetour.com" >> .env
+          echo "VITE_API_URL=https://${{ env.BRANCH }}-backend.services.viggosdetour.com" >> .env
 
       - name: Build Docker image
         env:
