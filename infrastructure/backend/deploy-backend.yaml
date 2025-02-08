@@ -32,7 +32,7 @@ spec:
             periodSeconds: 10
           env:
             - name: DATA_PATH
-              value: "/data/master-database.db"
+              value: "/data/${BRANCH}-database.db"
             - name: ENV
               value: production
             - name: BRANCH
