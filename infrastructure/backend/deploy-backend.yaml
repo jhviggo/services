@@ -18,7 +18,7 @@ spec:
           image: ${CONTAINER_REPO}:backend-${BRANCH}-${GITHUB_SHA}
           volumeMounts:
             - mountPath: "/data"
-              name: pvc-data
+              name: pvc-master-data
           readinessProbe:
             httpGet:
               path: /health
