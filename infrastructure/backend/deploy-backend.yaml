@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: ${BRANCH}-backend
 spec:
@@ -8,6 +8,16 @@ spec:
       app: ${BRANCH}-backend
   replicas: 1
   revisionHistoryLimit: 2
+  volumeClaimTemplates:
+    - metadata:
+        name: pvc-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 50Gi
+        storageClassName: do-block-storage
   template:
     metadata:
       labels:
@@ -16,6 +26,9 @@ spec:
       containers:
         - name: ${BRANCH}-backend
           image: ${CONTAINER_REPO}:backend-${BRANCH}-${GITHUB_SHA}
+          volumeMounts:
+            - mountPath: "/data"
+              name: pvc-data
           readinessProbe:
             httpGet:
               path: /health
@@ -26,6 +39,10 @@ spec:
           env:
             - name: DATABASE_NAME
               value: ${BRANCH}
+            - name: DATA_PATH
+              value: "/data"
+            - name: ENV
+              value: production
             - name: BRANCH
               value: ${BRANCH}
             - name: JWT_SECRET
