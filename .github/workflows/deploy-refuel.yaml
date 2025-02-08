@@ -24,6 +24,11 @@ jobs:
         with:
           branch: ${{ github.head_ref || github.ref_name }}
 
+      - name: Set environment
+        working-directory: refuel/
+        run: |
+          echo "VITE_API_URL=${{ env.BRANCH }}-backend.services.viggosdetour.com" >> .env
+
       - name: Build Docker image
         env:
           DOCKER_IMAGE: ${{ env.CONTAINER_REPO }}:refuel-${{ env.BRANCH }}-${{ env.GITHUB_SHA_HASH }}
