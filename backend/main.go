@@ -24,9 +24,9 @@ func main() {
 	if environment != "production" {
 		godotenv.Load()
 	}
-	dataPath := os.Getenv("DATA_PATH")
+	databasePath := os.Getenv("DATA_PATH")
 
-	lib.ConnectToSQLite(dataPath)
+	lib.ConnectToSQLite(databasePath)
 	err := lib.MigrateTables()
 	if err != nil {
 		panic("Unable to migrate")

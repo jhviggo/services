@@ -31,10 +31,8 @@ spec:
             failureThreshold: 3
             periodSeconds: 10
           env:
-            - name: DATABASE_NAME
-              value: ${BRANCH}
             - name: DATA_PATH
-              value: "/data"
+              value: "/data/${BRANCH}-database.db"
             - name: ENV
               value: production
             - name: BRANCH
