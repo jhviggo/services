@@ -13,12 +13,16 @@ spec:
       labels:
         app: ${BRANCH}-backend
     spec:
+      volumes:
+        - name: volume-master-data
+          persistentVolumeClaim:
+            claimName: pvc-master-data
       containers:
         - name: ${BRANCH}-backend
           image: ${CONTAINER_REPO}:backend-${BRANCH}-${GITHUB_SHA}
           volumeMounts:
             - mountPath: "/data"
-              name: pvc-master-data
+              name: volume-master-data
           readinessProbe:
             httpGet:
               path: /health
