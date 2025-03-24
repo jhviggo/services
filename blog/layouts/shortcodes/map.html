@@ -16,8 +16,8 @@
     map.setMaxZoom(15).setMinZoom(3);
 
     // create lines between markers
-    L.polyline(points.map(p => p.coords), {color: 'black', opacity: 1, className: 'no-click'}).addTo(map);
-    L.polyline([points[points.length-1].coords, tokyoCoords], { color: 'black', dashArray: "15 10", opacity: 0.5}).addTo(map);
+    L.polyline(points.map(p => p.coords), {color: 'rgb(0, 0, 0)', opacity: 1, className: 'no-click'}).addTo(map);
+    L.polyline([points[points.length-1].coords, tokyoCoords], { color: 'rgb(0, 0, 0)', dashArray: "15 10", opacity: 0.5}).addTo(map);
 
     // render markers
     for (const point of points) {
