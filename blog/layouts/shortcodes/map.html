@@ -46,8 +46,8 @@
 			.bindTooltip('Tokyo, Japan')
 			.addTo(map);
 
-      L.polyline(tracking.map(p => p.coords), {color: 'rgb(70, 150, 90)', opacity: 1, className: 'no-click'}).addTo(map);
-  }, 100) // timeout to prevent map rendering before main layout
+    L.polyline(tracking.map(p => p.coords), {color: 'rgb(70, 150, 90)', opacity: 1, className: 'no-click'}).addTo(map);
+  }, 150) // timeout to prevent map rendering before main layout
 </script>
 
 <style>
