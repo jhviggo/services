@@ -2,7 +2,7 @@
 date: '2025-01-30T16:49:39+01:00'
 title: 'Planning the Trip'
 tags: ['Planning']
-weight: 1
+#weight: 1
 ---
 
 Before my trip I made sure to plan out the trip to have a good idea of how long the trip would be, an estimated cost and to find cool locations to visit on the way. Check out the [world map](/world-map) for an interactive map.
