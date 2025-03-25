@@ -47,6 +47,15 @@
 			.addTo(map);
 
     L.polyline(tracking.map(p => p.coords), {color: 'rgb(70, 150, 90)', opacity: 1, className: 'no-click'}).addTo(map);
+    const circleMarker = L.circleMarker(tracking[tracking.length-1].coords, {
+				color: 'rgb(70, 150, 90)',
+				fillColor: 'rgb(120, 200, 140)',
+				fillOpacity: 1,
+				radius: 7,
+				className: 'no-click'
+			})
+			.bindTooltip(`I'm in ${tracking[tracking.length-1].hoverText}`)
+			.addTo(map);
   }, 150) // timeout to prevent map rendering before main layout
 </script>
 

@@ -1,15 +1,20 @@
-- coords: # esbjerg
+- hoverText: 'Esbjerg, Denmark'
+  coords:
     - 55.47555
     - 8.48574
-- coords: # hamburg
+- hoverText: 'Hamburg, Germany'
+  coords:
     - 53.5591
     - 10.1321
-- coords: # hildesheim
+- hoverText: 'Hildesheim, Germany'
+  coords:
     - 52.14724
     - 9.93791
-- coords: # erfurt
+- hoverText: 'Erfurt, Germany'
+  coords:
     - 50.98118
     - 11.01680
-- coords: # eichstatt
+- hoverText: 'Eichstätt, Germany'
+  coords:
     - 48.892455
     - 11.184468
