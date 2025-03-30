@@ -22,3 +22,11 @@
   coords:
     - 48.140905
     - 11.559366
+- hoverText: 'Insbruck, Austria'
+  coords:
+    - 47.25590
+    - 11.39810
+- hoverText: 'Calliano, Italy'
+  coords:
+    - 45.934035
+    - 11.094453
