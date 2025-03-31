@@ -3,6 +3,8 @@
     - 55.47555
     - 8.48574
 - hoverText: 'Hamburg, Germany'
+  clickable: true
+  link: /posts/the-start-of-a-journey/
   coords:
     - 53.5591
     - 10.1321
@@ -19,10 +21,13 @@
     - 48.892455
     - 11.184468
 - hoverText: 'München, Germany'
+  clickable: true
+  link: /posts/carnet-and-repairs/
   coords:
     - 48.140905
     - 11.559366
 - hoverText: 'Insbruck, Austria'
+  hidden: true
   coords:
     - 47.25590
     - 11.39810
@@ -30,3 +35,7 @@
   coords:
     - 45.934035
     - 11.094453
+- hoverText: 'Peschiera del Garda, Italy'
+  coords:
+    - 45.443249
+    - 10.700802
