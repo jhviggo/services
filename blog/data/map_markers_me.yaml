@@ -51,3 +51,15 @@
   coords:
     - 46.049
     - 14.507
+- hoverText: 'Maribor, Slovenia'
+  coords:
+    - 46.55074
+    - 15.65058
+- hoverText: 'Budapest, Hungary'
+  coords:
+    - 47.50059
+    - 19.05703
+- hoverText: 'Siófok, Hungary'
+  coords:
+    - 46.90328
+    - 18.05667
