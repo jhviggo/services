@@ -67,3 +67,11 @@
   coords:
     - 45.80508
     - 15.97923
+- hoverText: 'Kostanjevica na Krki, Slovenia'
+  coords:
+    - 45.845662
+    - 15.421388
+- hoverText: 'Zadar, Croatia'
+  coords:
+    - 44.11722
+    - 15.24279
