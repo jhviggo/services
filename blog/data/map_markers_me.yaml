@@ -1,3 +1,9 @@
+- hoverText: 'Aarhus, Denmark'
+  clickable: true
+  link: /posts/planning/route/
+  coords:
+    - 56.156
+    - 10.184
 - hoverText: 'Esbjerg, Denmark'
   coords:
     - 55.47555
@@ -75,3 +81,19 @@
   coords:
     - 44.11722
     - 15.24279
+- hoverText: 'Krka National Park, Croatia'
+  coords:
+    - 43.818265
+    - 15.924063
+- hoverText: 'Split, Croatia'
+  coords:
+    - 43.51152
+    - 16.43997
+- hoverText: 'Dubrovnik, Croatia'
+  coords:
+    - 42.65168
+    - 18.07839
+- hoverText: 'Mostar, Bosnia'
+  coords:
+    - 43.34334
+    - 17.80777
