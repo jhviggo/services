@@ -1,6 +1,4 @@
 - hoverText: 'Aarhus, Denmark'
-  clickable: true
-  link: /posts/planning/route/
   coords:
     - 56.156
     - 10.184
@@ -9,8 +7,6 @@
     - 55.47555
     - 8.48574
 - hoverText: 'Hamburg, Germany'
-  clickable: true
-  link: /posts/the-start-of-a-journey/
   coords:
     - 53.5591
     - 10.1321
@@ -27,8 +23,6 @@
     - 48.892455
     - 11.184468
 - hoverText: 'München, Germany'
-  clickable: true
-  link: /posts/carnet-and-repairs/
   coords:
     - 48.140905
     - 11.559366
@@ -97,3 +91,23 @@
   coords:
     - 43.34334
     - 17.80777
+- hoverText: 'Sarajevo, Bosnia'
+  coords:
+    - 43.85262
+    - 18.3853
+- hoverText: 'Belgrade, Serbia'
+  coords:
+    - 44.8146
+    - 20.46023
+- hoverText: 'Niš, Serbia'
+  coords:
+    - 43.318762
+    - 21.896685
+- hoverText: 'Craiova, Romania'
+  coords:
+    - 44.31821
+    - 23.79601
+- hoverText: 'Bucharest, Romania'
+  coords:
+    - 44.43525
+    - 26.10263
