@@ -111,3 +111,11 @@
   coords:
     - 44.43525
     - 26.10263
+- hoverText: 'Veliko Tarnovo, Bulgaria'
+  coords:
+    - 43.080855
+    - 25.644697
+- hoverText: 'Sofia, Bulgaria'
+  coords:
+    - 42.69708
+    - 23.32172
