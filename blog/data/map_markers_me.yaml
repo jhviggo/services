@@ -119,3 +119,17 @@
   coords:
     - 42.69708
     - 23.32172
+- hoverText: 'Skopje, North Macedonia'
+  coords:
+    - 41.99583
+    - 21.43149
+- hoverText: 'Ohrid, North Macedonia'
+  coords:
+    - 41.11599
+    - 20.80892
+- hoverText: 'Tiranë, Albania'
+  coords:
+    - 41.32772
+    - 19.81914
+    
+    
