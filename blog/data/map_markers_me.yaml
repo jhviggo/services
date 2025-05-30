@@ -24,8 +24,8 @@
     - 11.184468
 - hoverText: 'München, Germany'
   coords:
-    - 48.140905
-    - 11.559366
+    - 48.129
+    - 11.578
 - hoverText: 'Insbruck, Austria'
   hidden: true
   coords:
@@ -57,16 +57,16 @@
     - 15.65058
 - hoverText: 'Budapest, Hungary'
   coords:
-    - 47.50059
-    - 19.05703
+    - 47.4898
+    - 19.0402
 - hoverText: 'Siófok, Hungary'
   coords:
     - 46.90328
     - 18.05667
 - hoverText: 'Zagreb, Croatia'
   coords:
-    - 45.80508
-    - 15.97923
+    - 45.81136
+    - 15.97748
 - hoverText: 'Kostanjevica na Krki, Slovenia'
   coords:
     - 45.845662
@@ -131,5 +131,11 @@
   coords:
     - 41.32772
     - 19.81914
-    
-    
+- hoverText: 'Meteora, Greece'
+  coords:
+    - 39.77032
+    - 21.18799
+- hoverText: 'Thessaloniki, Greece'
+  coords:
+    - 40.64060
+    - 22.93632
