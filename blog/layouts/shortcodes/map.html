@@ -15,43 +15,18 @@
     map.setView([45.7096757,17.1851883], 4);
     map.setMaxZoom(15).setMinZoom(3);
 
+    
     // create lines between markers
-    L.polyline(points.map(p => p.coords), {color: 'rgb(0, 0, 0)', opacity: 1, className: 'no-click'}).addTo(map);
-    L.polyline([points[points.length-1].coords, tokyoCoords], { color: 'rgb(0, 0, 0)', dashArray: "15 10", opacity: 0.5}).addTo(map);
+    L.polyline(points.map(p => p.coords), {color: 'rgba(0, 0, 0, 0.35)', opacity: 1, className: 'no-click'}).addTo(map);
+    L.polyline([points[points.length-1].coords, tokyoCoords], { color: 'rgba(0, 0, 0, 0.5)', dashArray: "15 10", opacity: 0.5}).addTo(map);
 
-    // render markers
-    for (const point of points) {
-			const circleMarker = L.circleMarker(point.coords, {
-				color: point.clickable ? 'var(--footer-link-color)' : 'black',
-				fillColor: 'white',
-				fillOpacity: 1,
-				radius: 7,
-				className: point.clickable ? 'point' : 'no-click'
-			})
-			.bindTooltip(point.hoverText)
-			.addTo(map);
-
-      if (point.clickable) {
-				circleMarker.addEventListener('click', () => window.open(point.link, '_blank'));
-			}
-		}
-    // draw Tokyo marker
-    L.circleMarker(tokyoCoords, {
-				color: 'black',
-				fillColor: 'white',
-				fillOpacity: 1,
-				radius: 7,
-				className: 'point'
-			})
-			.bindTooltip('Tokyo, Japan')
-			.addTo(map);
-
-    L.polyline(tracking.map(p => p.coords), {color: 'rgb(70, 150, 90)', opacity: 1, className: 'no-click'}).addTo(map);
+    
+    L.polyline(tracking.map(p => p.coords), {color: 'rgba(70, 150, 90, 0.75)', opacity: 1, className: 'no-click'}).addTo(map);
     for (let i = 0; i < tracking.length; i++) {
       if (i == tracking.length - 1) {
         L.circleMarker(tracking[i].coords, {
-            color: 'rgb(70, 150, 90)',
-            fillColor: 'rgb(120, 200, 140)',
+            color: 'rgb(10, 83, 154)',
+            fillColor: 'rgb(50, 153, 200)',
             fillOpacity: 1,
             radius: 7,
             className: 'no-click'

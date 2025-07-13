@@ -139,3 +139,90 @@
   coords:
     - 40.64060
     - 22.93632
+- hoverText: 'Viotopoi Kirkis, Greece'
+  coords:
+    - 40.93981
+    - 25.78320
+- hoverText: 'Istanbul, Türkiye'
+  coords:
+    - 41.0416
+    - 28.9795
+- hoverText: ''
+  hidden: true
+  coords:
+    - 40.76940
+    - 29.52147
+- hoverText: ''
+  hidden: true
+  coords:
+    - 40.71779
+    - 29.49501
+- hoverText: 'Izmir, Türkiye'
+  coords:
+    - 38.40480
+    - 27.13460
+- hoverText: ''
+  hidden: true
+  coords:
+    - 37.30747
+    - 27.77953
+- hoverText: 'Fethiye, Türkiye'
+  coords:
+    - 36.63043
+    - 29.12235
+- hoverText: 'Izmir, Türkiye'
+  coords:
+    - 38.40480
+    - 27.13460
+- hoverText: ''
+  hidden: true
+  coords:
+    - 39.30486
+    - 26.69901
+- hoverText: ''
+  hidden: true
+  coords:
+    - 39.57623
+    - 27.01186
+- hoverText: 'Agora Camp, Türkiye'
+  coords:
+    - 39.677585
+    - 26.164080
+- hoverText: ''
+  hidden: true
+  coords:
+    - 40.327799
+    - 26.659618
+- hoverText: ''
+  hidden: true
+  coords:
+    - 40.349223
+    - 26.617298
+- hoverText: ''
+  hidden: true
+  coords:
+    - 40.59456
+    - 26.85870
+- hoverText: ''
+  hidden: true
+  coords:
+    - 40.85928
+    - 26.62558
+- hoverText: ''
+  hidden: true
+  coords:
+    - 40.93956
+    - 26.31760
+- hoverText: ''
+  hidden: true
+  coords:
+    - 40.99049
+    - 24.60989
+- hoverText: 'Thessaloniki, Greece'
+  coords:
+    - 40.64060
+    - 22.93632
+- hoverText: 'Bansko, Bulgaria'
+  coords:
+    - 41.83375
+    - 23.48538
