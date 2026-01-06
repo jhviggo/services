@@ -2,12 +2,12 @@ name: Deploying Blog Frontend
 on:
   push:
     paths:
-      - 'blog/**'
-      - 'infrastructure/blog/**'
-      - '.github/workflows/deploy-blog.yaml'
+      - "blog/**"
+      - "infrastructure/blog/**"
+      - ".github/workflows/deploy-blog.yaml"
 
 env:
-  CONTAINER_REPO: registry.digitalocean.com/viggosdetour-production/services
+  CONTAINER_REPO: registry.digitalocean.com/vmux-registry/deployments
   SRC: ./blog
   INFRA: ./infrastructure/blog
 
@@ -53,7 +53,7 @@ jobs:
         run: |
           mkdir $HOME/.kube/
           echo "${{ secrets.KUBE_CONFIG }}" >> $HOME/.kube/config
-      
+
       - name: Deploy kubernetes definitions
         working-directory: ${{ env.INFRA }}
         env:
@@ -63,10 +63,7 @@ jobs:
         run: |
           envsubst < deploy-blog.yaml > def.yaml
           kubectl apply -f def.yaml
-      
+
       - name: Wait for service to be ready
         run: |
           kubectl rollout status deployment/${{ env.BRANCH }}-blog --timeout=30s
-          
-      
-      
