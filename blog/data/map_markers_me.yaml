@@ -1,228 +1,228 @@
-- hoverText: 'Aarhus, Denmark'
+- hoverText: "Aarhus, Denmark"
   coords:
     - 56.156
     - 10.184
-- hoverText: 'Esbjerg, Denmark'
+- hoverText: "Esbjerg, Denmark"
   coords:
     - 55.47555
     - 8.48574
-- hoverText: 'Hamburg, Germany'
+- hoverText: "Hamburg, Germany"
   coords:
     - 53.5591
     - 10.1321
-- hoverText: 'Hildesheim, Germany'
+- hoverText: "Hildesheim, Germany"
   coords:
     - 52.14724
     - 9.93791
-- hoverText: 'Erfurt, Germany'
+- hoverText: "Erfurt, Germany"
   coords:
     - 50.98118
     - 11.01680
-- hoverText: 'Eichstätt, Germany'
+- hoverText: "Eichstätt, Germany"
   coords:
     - 48.892455
     - 11.184468
-- hoverText: 'München, Germany'
+- hoverText: "München, Germany"
   coords:
     - 48.129
     - 11.578
-- hoverText: 'Insbruck, Austria'
+- hoverText: "Insbruck, Austria"
   hidden: true
   coords:
     - 47.25590
     - 11.39810
-- hoverText: 'Calliano, Italy'
+- hoverText: "Calliano, Italy"
   coords:
     - 45.934035
     - 11.094453
-- hoverText: 'Peschiera del Garda, Italy'
+- hoverText: "Peschiera del Garda, Italy"
   coords:
     - 45.443249
     - 10.700802
-- hoverText: 'Vezzano Sul Crostolo, Italy'
+- hoverText: "Vezzano Sul Crostolo, Italy"
   coords:
     - 44.601919
     - 10.547090
-- hoverText: 'Venice, Italy'
+- hoverText: "Venice, Italy"
   coords:
     - 45.436
     - 12.333
-- hoverText: 'Ljubljana, Slovenia'
+- hoverText: "Ljubljana, Slovenia"
   coords:
     - 46.049
     - 14.507
-- hoverText: 'Maribor, Slovenia'
+- hoverText: "Maribor, Slovenia"
   coords:
     - 46.55074
     - 15.65058
-- hoverText: 'Budapest, Hungary'
+- hoverText: "Budapest, Hungary"
   coords:
     - 47.4898
     - 19.0402
-- hoverText: 'Siófok, Hungary'
+- hoverText: "Siófok, Hungary"
   coords:
     - 46.90328
     - 18.05667
-- hoverText: 'Zagreb, Croatia'
+- hoverText: "Zagreb, Croatia"
   coords:
     - 45.81136
     - 15.97748
-- hoverText: 'Kostanjevica na Krki, Slovenia'
+- hoverText: "Kostanjevica na Krki, Slovenia"
   coords:
     - 45.845662
     - 15.421388
-- hoverText: 'Zadar, Croatia'
+- hoverText: "Zadar, Croatia"
   coords:
     - 44.11722
     - 15.24279
-- hoverText: 'Krka National Park, Croatia'
+- hoverText: "Krka National Park, Croatia"
   coords:
     - 43.818265
     - 15.924063
-- hoverText: 'Split, Croatia'
+- hoverText: "Split, Croatia"
   coords:
     - 43.51152
     - 16.43997
-- hoverText: 'Dubrovnik, Croatia'
+- hoverText: "Dubrovnik, Croatia"
   coords:
     - 42.65168
     - 18.07839
-- hoverText: 'Mostar, Bosnia'
+- hoverText: "Mostar, Bosnia"
   coords:
     - 43.34334
     - 17.80777
-- hoverText: 'Sarajevo, Bosnia'
+- hoverText: "Sarajevo, Bosnia"
   coords:
     - 43.85262
     - 18.3853
-- hoverText: 'Belgrade, Serbia'
+- hoverText: "Belgrade, Serbia"
   coords:
     - 44.8146
     - 20.46023
-- hoverText: 'Niš, Serbia'
+- hoverText: "Niš, Serbia"
   coords:
     - 43.318762
     - 21.896685
-- hoverText: 'Craiova, Romania'
+- hoverText: "Craiova, Romania"
   coords:
     - 44.31821
     - 23.79601
-- hoverText: 'Bucharest, Romania'
+- hoverText: "Bucharest, Romania"
   coords:
     - 44.43525
     - 26.10263
-- hoverText: 'Veliko Tarnovo, Bulgaria'
+- hoverText: "Veliko Tarnovo, Bulgaria"
   coords:
     - 43.080855
     - 25.644697
-- hoverText: 'Sofia, Bulgaria'
+- hoverText: "Sofia, Bulgaria"
   coords:
     - 42.69708
     - 23.32172
-- hoverText: 'Skopje, North Macedonia'
+- hoverText: "Skopje, North Macedonia"
   coords:
     - 41.99583
     - 21.43149
-- hoverText: 'Ohrid, North Macedonia'
+- hoverText: "Ohrid, North Macedonia"
   coords:
     - 41.11599
     - 20.80892
-- hoverText: 'Tiranë, Albania'
+- hoverText: "Tiranë, Albania"
   coords:
     - 41.32772
     - 19.81914
-- hoverText: 'Meteora, Greece'
+- hoverText: "Meteora, Greece"
   coords:
     - 39.77032
     - 21.18799
-- hoverText: 'Thessaloniki, Greece'
+- hoverText: "Thessaloniki, Greece"
   coords:
     - 40.64060
     - 22.93632
-- hoverText: 'Viotopoi Kirkis, Greece'
+- hoverText: "Viotopoi Kirkis, Greece"
   coords:
     - 40.93981
     - 25.78320
-- hoverText: 'Istanbul, Türkiye'
+- hoverText: "Istanbul, Türkiye"
   coords:
     - 41.0416
     - 28.9795
-- hoverText: ''
+- hoverText: ""
   hidden: true
   coords:
     - 40.76940
     - 29.52147
-- hoverText: ''
+- hoverText: ""
   hidden: true
   coords:
     - 40.71779
     - 29.49501
-- hoverText: 'Izmir, Türkiye'
+- hoverText: "Izmir, Türkiye"
   coords:
     - 38.40480
     - 27.13460
-- hoverText: ''
+- hoverText: ""
   hidden: true
   coords:
     - 37.30747
     - 27.77953
-- hoverText: 'Fethiye, Türkiye'
+- hoverText: "Fethiye, Türkiye"
   coords:
     - 36.63043
     - 29.12235
-- hoverText: 'Izmir, Türkiye'
+- hoverText: "Izmir, Türkiye"
   coords:
     - 38.40480
     - 27.13460
-- hoverText: ''
+- hoverText: ""
   hidden: true
   coords:
     - 39.30486
     - 26.69901
-- hoverText: ''
+- hoverText: ""
   hidden: true
   coords:
     - 39.57623
     - 27.01186
-- hoverText: 'Agora Camp, Türkiye'
+- hoverText: "Agora Camp, Türkiye"
   coords:
     - 39.677585
     - 26.164080
-- hoverText: ''
+- hoverText: ""
   hidden: true
   coords:
     - 40.327799
     - 26.659618
-- hoverText: ''
+- hoverText: ""
   hidden: true
   coords:
     - 40.349223
     - 26.617298
-- hoverText: ''
+- hoverText: ""
   hidden: true
   coords:
     - 40.59456
     - 26.85870
-- hoverText: ''
+- hoverText: ""
   hidden: true
   coords:
     - 40.85928
     - 26.62558
-- hoverText: ''
+- hoverText: ""
   hidden: true
   coords:
     - 40.93956
     - 26.31760
-- hoverText: ''
+- hoverText: ""
   hidden: true
   coords:
     - 40.99049
     - 24.60989
-- hoverText: 'Thessaloniki, Greece'
+- hoverText: "Thessaloniki, Greece"
   coords:
     - 40.64060
     - 22.93632
-- hoverText: 'Bansko, Bulgaria'
+- hoverText: "Bansko, Bulgaria"
   coords:
-    - 41.83375
-    - 23.48538
+    - 55.47555
+    - 8.48574
