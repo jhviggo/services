@@ -23,17 +23,7 @@
     
     L.polyline(tracking.map(p => p.coords), {color: 'rgba(70, 150, 90, 0.75)', opacity: 1, className: 'no-click'}).addTo(map);
     for (let i = 0; i < tracking.length; i++) {
-      if (i == tracking.length - 1) {
-        L.circleMarker(tracking[i].coords, {
-            color: 'rgb(10, 83, 154)',
-            fillColor: 'rgb(50, 153, 200)',
-            fillOpacity: 1,
-            radius: 7,
-            className: 'no-click'
-          })
-          .bindTooltip(tracking[i].hoverText)
-          .addTo(map);
-      } else if (!tracking[i].hidden) {
+      if (!tracking[i].hidden) {
         const circleMarker = L.circleMarker(tracking[i].coords, {
             color: tracking[i].clickable ? 'var(--footer-link-color)' : 'rgb(70, 150, 90)',
             fillColor: tracking[i].clickable ? 'var(--footer-link-color)' :'rgb(120, 200, 140)',
