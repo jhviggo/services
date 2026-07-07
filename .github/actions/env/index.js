@@ -1,7 +1,7 @@
 // Make sure github dependencies are installed
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
-exec('npm install @actions/core @actions/github').then(() => {
+exec('npm install @actions/core@1.9.1 @actions/github@5.1.1').then(() => {
     const core = require('@actions/core');
     const github = require('@actions/github');
     

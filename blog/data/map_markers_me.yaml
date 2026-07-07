@@ -226,3 +226,64 @@
   coords:
     - 55.47555
     - 8.48574
+- hoverText: "Bals, Romania"
+  coords:
+    - 44.377398
+    - 24.074854
+- hoverText: "Cluj-Napoca, Romania"
+  coords:
+    - 46.769509
+    - 23.589849 
+- hoverText: "Budapest, Hungary"
+  coords:
+    - 47.485943
+    - 19.165923
+- hoverText: "Banská Štiavnica, Slovakia"
+  coords:
+    - 48.457361
+    - 18.901720
+- hoverText: "Katowice, Poland"
+  coords:
+    - 50.259841
+    - 19.012978
+- hoverText: "Łódź, Poland"
+  coords:
+    - 51.768389
+    - 19.457479
+- hoverText: "Gdańsk, Poland"
+  coords:
+    - 54.356262
+    - 18.621027
+- hoverText: ""
+  hidden: true
+  coords:
+    - 57.30075
+    - 17.53937
+- hoverText: "Stockholm, Sweden"
+  coords:
+    - 59.325050
+    - 18.070222
+- hoverText: ""
+  hidden: true
+  coords:
+    - 59.612528
+    - 16.541322
+- hoverText: "Halmstad, Sweden"
+  coords:
+    - 56.670819
+    - 12.850125
+- hoverText: ""
+  hidden: true
+  coords:
+    - 56.411379
+    - 10.895004
+- hoverText: ""
+  hidden: true
+  coords:
+    - 56.295146
+    - 10.337094
+- hoverText: "Aarhus, Denmark"
+  coords:
+    - 56.160868
+    - 10.183103
+
