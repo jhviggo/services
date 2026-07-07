@@ -282,8 +282,9 @@
   coords:
     - 56.295146
     - 10.337094
-- hoverText: "Aarhus, Denmark"
+- hoverText: ""
+  hidden: true
   coords:
-    - 56.160868
-    - 10.183103
+    - 56.156
+    - 10.184
 
